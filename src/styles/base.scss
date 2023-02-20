@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
+@import url("https://fonts.cdnfonts.com/css/montserrat");
+@import url("https://fonts.cdnfonts.com/css/open-sans");
 
 $colors: (
     PRIMARY: #eb5440,
@@ -21,19 +22,115 @@ $text-fonts: (
     HYPERLINK: #067bc2,
 );
 
+$montserrat: "Montserrat", sans-serif;
+$openSans: "Open Sans", sans-serif;
+$bold: 700;
+$semiBold: 600;
+$medium: 500;
+$regular: 400;
+
 body {
     margin: 0;
     background-color: map-get($colors, BACKGROUND1);
 }
 
-.tab-button {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+.montserrat-bold {
+    font-family: $montserrat;
+    font-weight: $bold;
+}
+
+.montserrat-Semibold {
+    font-family: $montserrat;
+    font-weight: $semiBold;
+}
+
+.montserrat-medium {
+    font-family: $montserrat;
+    font-weight: $medium;
+}
+
+.montserrat-medium-italic {
+    @extend .montserrat-medium;
+    font-style: italic;
+}
+
+.openSans-Semibold {
+    font-family: $openSans;
+    font-weight: $semiBold;
+}
+
+.openSans-Regular {
+    font-family: $openSans;
+    font-weight: $regular;
+}
+
+// Montserrat
+
+//  bold
+.header1 {
+    @extend .montserrat-bold;
+    font-size: 32px;
+}
+
+.header2 {
+    @extend .montserrat-bold;
+    font-size: 22px;
+}
+
+.header-menu {
+    @extend .montserrat-medium;
+    .active {
+        @extend .montserrat-bold;
+    }
     font-size: 18px;
 }
 
-.header1 {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
-    font-size: 32px;
+.tab-button {
+    @extend .montserrat-bold;
+    font-size: 18px;
 }
+
+//  semibold
+
+.back-button-label {
+    @extend .montserrat-Semibold;
+    font-size: 16px;
+}
+
+.input-field-title {
+    @extend .montserrat-Semibold;
+    font-size: 14px;
+}
+
+//  medium
+.input-field-title {
+    @extend .montserrat-Semibold;
+    font-size: 14px;
+}
+
+.empty-state-message {
+    @extend .montserrat-medium;
+    font-size: 18px;
+}
+
+.error-message {
+    @extend .montserrat-medium-italic;
+    font-size: 14px;
+}
+// Open Sans
+
+.listing-information {
+    @extend .openSans-Semibold;
+    font-size: 16px;
+}
+
+.bodytext {
+    @extend .openSans-Regular;
+    font-size: 18px;
+}
+
+.input-field {
+    @extend .openSans-Regular;
+    font-size: 18px;
+}
+

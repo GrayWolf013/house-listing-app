@@ -1,7 +1,7 @@
 <template>
-  <nav class="topnav tab-button ">
+  <nav class="topnav tab-button header-menu ">
     <img src="@/assets/img_logo_dtt@3x.png" alt="Italian Trulli">
-    <router-link to="/">Home</router-link>
+    <router-link to="/">Houses</router-link>
     <router-link to="/about">About</router-link>
   </nav>
   <router-view />
@@ -22,7 +22,6 @@
     text-align: center;
     padding: 20px;
     text-decoration: none;
-    font-size: 17px;
     margin-right: 2%;
 
     &:hover {
