@@ -14,44 +14,33 @@
     </div>
     <br>
     <div>
-      <div class="card" v-for="house of housesprop" :key="house.id">
-        <img class="image" v-if="house.image" :src="house.image" alt="HouseImg" />
-        <img class="image" v-else src="@/assets/img_placeholder_house@3x.png" alt="HouseImg"/>
-        <div class="container">
-          <h4><b>{{ house.location.street }}</b></h4>
-          <p>€{{ house.price }}</p>
-          <b>{{ house.location.zip }} {{ house.location.city }}</b>
-          <br>
-          <img src="@/assets/ic_bed@3x.png" alt="Italian Trulli" width="10" height="10">
-          <b>{{ house.rooms.bedrooms }}</b>
-          <img src="@/assets/ic_bath@3x.png" alt="Italian Trulli" width="10" height="10">
-          <b>{{ house.rooms.bathrooms }}</b>
-          <img src="@/assets/ic_size@3x.png" alt="Italian Trulli" width="10" height="10">
-          <b>{{ house.size }} m²</b>
-          
-        </div>
-      </div>
-      <!-- <div class="card">
+      <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house"/>
+        <!-- <div class="card">
         <img class="image" src="@/assets/img_placeholder_house@3x.png" alt="HouseImg" />
         <div class="container">
           <h4><b>Jane Doe</b></h4>
           <p>Interior Designer</p>
         </div>
       </div> -->
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
+import HouseCard from './HouseCard.vue';
+
 export default {
-    name: "HelloWorld",
-    props: {
-      housesprop: {
-            type: Array,
-            required: true
-        },
+  name: "HomeContent",
+  props: {
+    housesprop: {
+      type: Array,
+      required: true
     },
-    setup () {}
+  },
+  setup() { },
+  components: {
+    HouseCard
+  }
 }
 </script>
 

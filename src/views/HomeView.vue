@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <HelloWorld v-if="store.state.houses" :housesprop="store.state.houses" />
+    <HouseContent v-if="store.state.houses" :housesprop="store.state.houses" />
   </div>
 </template>
 
 <script>
 import { reactive, toRefs, onMounted,  } from 'vue'
 import { ref } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'
+import HouseContent from '@/components/HouseContent.vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -49,7 +49,7 @@ export default {
     }
   },
   components: {
-    HelloWorld
+    HouseContent
   }
 }
 
