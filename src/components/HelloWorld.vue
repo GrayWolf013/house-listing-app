@@ -15,19 +15,29 @@
     <br>
     <div>
       <div class="card" v-for="house of housesprop" :key="house.id">
-        <img src="@/assets/img_placeholder_house@3x.png" alt="HouseImg" />
+        <img class="image" v-if="house.image" :src="house.image" alt="HouseImg" />
+        <img class="image" v-else src="@/assets/img_placeholder_house@3x.png" alt="HouseImg"/>
         <div class="container">
-          <h4><b>{{ house.location.street }} {{ house.location.city }}</b></h4>
+          <h4><b>{{ house.location.street }}</b></h4>
           <p>€{{ house.price }}</p>
+          <b>{{ house.location.zip }} {{ house.location.city }}</b>
+          <br>
+          <img src="@/assets/ic_bed@3x.png" alt="Italian Trulli" width="10" height="10">
+          <b>{{ house.rooms.bedrooms }}</b>
+          <img src="@/assets/ic_bath@3x.png" alt="Italian Trulli" width="10" height="10">
+          <b>{{ house.rooms.bathrooms }}</b>
+          <img src="@/assets/ic_size@3x.png" alt="Italian Trulli" width="10" height="10">
+          <b>{{ house.size }} m²</b>
+          
         </div>
       </div>
-      <div class="card">
-        <img src="@/assets/img_placeholder_house@3x.png" alt="HouseImg" />
+      <!-- <div class="card">
+        <img class="image" src="@/assets/img_placeholder_house@3x.png" alt="HouseImg" />
         <div class="container">
           <h4><b>Jane Doe</b></h4>
           <p>Interior Designer</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -104,7 +114,7 @@ export default {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
 
-  img {
+  .image {
     border-radius: 5px 5px 0 0;
     padding: 20px;
     width: 100px;
