@@ -5,7 +5,12 @@ export default createStore({
   state: {
     houses: [],
   },
-
+  
+  getters: {
+    search: (state) => (searchText) => {
+      return state.houses.filter(house => house.location.street.includes(searchText))
+    }
+  },
   mutations: {
     /**
      * Updates a specific property in the store

@@ -10,24 +10,18 @@
       </button>
     </div>
     <div class="home-body__TOP">
-      <input type="text" placeholder="Search.." name="search" />
+      <input v-model="searchText" type="text" placeholder="search for a house" name="search" @keyup="search(searchText)"/>
     </div>
     <br>
     <div>
       <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house"/>
-        <!-- <div class="card">
-        <img class="image" src="@/assets/img_placeholder_house@3x.png" alt="HouseImg" />
-        <div class="container">
-          <h4><b>Jane Doe</b></h4>
-          <p>Interior Designer</p>
-        </div>
-      </div> -->
       </div>
     </div>
 </template>
 
 <script>
-import HouseCard from './HouseCard.vue';
+import { reactive, toRefs } from "vue"
+import HouseCard from './HouseCard.vue'
 
 export default {
   name: "HomeContent",
@@ -37,7 +31,20 @@ export default {
       required: true
     },
   },
-  setup() { },
+  setup(props, context) { 
+    const state = reactive({
+      searchText: ""
+    })
+
+    function search(searchText) {
+      context.emit('search', searchText)
+    }
+    
+    return {
+      ...toRefs(state),
+      search,
+    };
+  },
   components: {
     HouseCard
   }

@@ -1,56 +1,55 @@
 <template>
   <div class="home">
-    <HouseContent v-if="store.state.houses" :housesprop="store.state.houses" />
+    <HouseContent v-if="houses" :housesprop="houses" @search="search"/>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs, onMounted,  } from 'vue'
-import { ref } from 'vue';
-import HouseContent from '@/components/HouseContent.vue'
-import { useStore } from 'vuex'
+import { reactive, toRefs, onMounted, computed } from "vue"
+import { useStore } from "vuex"
+import HouseContent from "@/components/HouseContent.vue"
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   setup() {
-    // const store = useStore()
-
     const state = reactive({
-      houses: ref([]),
+      searchText: ""
     })
-
-    // const movies = ref([]);
 
     const store = useStore()
 
-    // const homes = computed(() => store.state.homes | [])
-    // const homes = ref([]);
+    function search(searchText) {
+      state.searchText = searchText
+    }
 
-    // const users = computed(() => store.state.users | [])
+    const houses = computed(() => {
+      if (state.searchText) {
+        return store.getters.search(state.searchText) 
+      }
+      return store.state.houses;
+    });
 
     onMounted(async () => {
-      console.log("store")
-      console.log(store)
-
-      console.log("store")
-      store.dispatch('getHouses').then(() => {
-        // API success
-        console.log("data fetched")
-      })
-      .catch(() => {
-        // API fail
-        console.log("error in request")
-      })     
+      store
+        .dispatch("getHouses")
+        .then(() => {
+          // API success
+          console.log("data fetched");
+        })
+        .catch(() => {
+          // API fail
+          console.log("error in request");
+        });
     });
 
     return {
       ...toRefs(state),
-      store
-    }
+      houses,
+      search,
+    };
   },
   components: {
-    HouseContent
-  }
-}
-
+    HouseContent,
+  },
+};
 </script>
