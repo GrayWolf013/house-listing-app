@@ -1,33 +1,41 @@
 <template>
-    <div class="card">
-        <img class="image" v-if="houseprop.image" :src="houseprop.image" alt="HouseImg" />
-        <img class="image" v-else src="@/assets/img_placeholder_house@3x.png" alt="HouseImg" />
-        <div class="container">
-            <h4><b>{{ houseprop.location.street }}</b></h4>
-            <p>€{{ houseprop.price }}</p>
-            <b>{{ houseprop.location.zip }} {{ houseprop.location.city }}</b>
-            <br>
-            <img src="@/assets/ic_bed@3x.png" alt="Italian Trulli" width="10" height="10">
-            <b>{{ houseprop.rooms.bedrooms }}</b>
-            <img src="@/assets/ic_bath@3x.png" alt="Italian Trulli" width="10" height="10">
-            <b>{{ houseprop.rooms.bathrooms }}</b>
-            <img src="@/assets/ic_size@3x.png" alt="Italian Trulli" width="10" height="10">
-            <b>{{ houseprop.size }} m²</b>
-        </div>
+  <div class="card">
+    <img class="image" v-if="houseprop.image" :src="houseprop.image" alt="HouseImg" />
+    <img
+      class="image"
+      v-else
+      src="@/assets/img_placeholder_house@3x.png"
+      alt="HouseImg"
+    />
+    <div class="container">
+      <div class="tab-button element">{{ houseprop.location.street }}</div>
+      <div class="body-text element">€ {{ houseprop.price }}</div>
+      <div class="listing-information text-grey element">
+        {{ houseprop.location.zip }} {{ houseprop.location.city }}
+      </div>
+      <div class="listing-information text-grey">
+        <img src="@/assets/ic_bed@3x.png" alt="Italian Trulli" width="10" height="10" />
+        {{ houseprop.rooms.bedrooms }}
+        <img src="@/assets/ic_bath@3x.png" alt="Italian Trulli" width="10" height="10" />
+        {{ houseprop.rooms.bathrooms }}
+        <img src="@/assets/ic_size@3x.png" alt="Italian Trulli" width="10" height="10" />
+        {{ houseprop.size }} m²
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "HouseCard",
-    props: {
-        houseprop: {
-            type: null,
-            required: true
-        },
+  name: "HouseCard",
+  props: {
+    houseprop: {
+      type: null,
+      required: true,
     },
-    setup() { }
-}
+  },
+  setup() {},
+};
 </script>
 
 <style lang="scss">
@@ -44,14 +52,17 @@ export default {
   }
 
   .image {
-    border-radius: 5px 5px 0 0;
-    padding: 20px;
-    width: 100px;
-    height: 100px;
+    border-radius: 15px;
+    padding: 10px;
+    width: 130px;
+    height: 130px;
   }
 
   .container {
-    padding: 2px 16px;
+    margin: 20px 0 0 20px;
+    .element {
+      margin-bottom: 5px;
+    }
   }
 }
 </style>

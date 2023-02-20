@@ -16,12 +16,6 @@ $textColors: (
     HYPERLINK: #067bc2,
 );
 
-$text-fonts: (
-    buttonTab: #000000,
-    SECONDARY: #4a4b4c,
-    HYPERLINK: #067bc2,
-);
-
 $montserrat: "Montserrat", sans-serif;
 $openSans: "Open Sans", sans-serif;
 $bold: 700;
@@ -124,7 +118,7 @@ body {
     font-size: 16px;
 }
 
-.bodytext {
+.body-text {
     @extend .openSans-Regular;
     font-size: 18px;
 }
@@ -134,3 +128,6 @@ body {
     font-size: 18px;
 }
 
+.text-grey {
+    color: map-get($colors, TERTIARY2);
+}
