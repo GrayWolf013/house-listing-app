@@ -9,7 +9,7 @@
     />
     <div class="container">
       <div class="tab-button element">{{ houseprop.location.street }}</div>
-      <div class="body-text element">€ {{ houseprop.price }}</div>
+      <div class="body-text element">€ {{ houseprop.price.toLocaleString('en-US') }}</div>
       <div class="listing-information text-grey element">
         {{ houseprop.location.zip }} {{ houseprop.location.city }}
       </div>
