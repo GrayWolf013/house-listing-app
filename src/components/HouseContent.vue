@@ -28,18 +28,14 @@
     <div v-if="housesprop.length > 0">
       <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house" />
     </div>
-    <div v-else class="empty-container empty-state-message center">
-      <img src="@/assets/img_empty_houses@3x.png" height="100" />
-      <div>No results found.</div>
-      <div>Please try another keyword.</div>
-    </div>
+    <EmptySearchView v-else class="empty-container empty-state-message center"/>
   </div>
 </template>
 
 <script>
 import { reactive, toRefs } from "vue";
 import HouseCard from "./HouseCard.vue";
-
+import EmptySearchView from './EmptySearchView.vue'
 export default {
   name: "HomeContent",
   props: {
@@ -64,6 +60,7 @@ export default {
   },
   components: {
     HouseCard,
+    EmptySearchView
   },
 };
 </script>
@@ -111,12 +108,5 @@ export default {
     vertical-align: middle;
     margin-top: 0px;
   }
-}
-
-.center {
-  margin: auto;
-  width: 60%;
-  padding: 10px;
-  text-align: center;
 }
 </style>
