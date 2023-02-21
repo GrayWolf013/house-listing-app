@@ -1,6 +1,12 @@
 import { createStore } from 'vuex'
 import Api from "@/api/client";
 
+Array.prototype.sortBy = function(p) {
+  return this.slice(0).sort(function(a,b) {
+    return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
+  });
+}
+
 export default createStore({
   state: {
     houses: [],
@@ -11,6 +17,15 @@ export default createStore({
       // check if value is event caused by clear x in input
       if(searchText.target) return state.houses
       return state.houses.filter(house => house.location.street.toLowerCase().includes(searchText.toLowerCase()))
+    },
+    sortBy: (state) => (byPrice) => {
+      if (state.houses) {
+        if (byPrice) {
+          return state.houses.sortBy('price')
+        } 
+        return state.houses.sortBy('size')
+      }
+      return []
     }
   },
   mutations: {

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HouseContent v-if="houses" :housesprop="houses" @search="search"/>
+    <HouseContent v-if="houses" :housesprop="houses" @search="search" @sortBy="sortBy"/>
   </div>
 </template>
 
@@ -13,7 +13,8 @@ export default {
   name: "HomeView",
   setup() {
     const state = reactive({
-      searchText: ""
+      searchText: "",
+      sortByPrice: true
     })
 
     const store = useStore()
@@ -22,11 +23,15 @@ export default {
       state.searchText = searchText
     }
 
+    function sortBy(price) {
+      state.sortByPrice = price
+    }
+
     const houses = computed(() => {
       if (state.searchText) {
         return store.getters.search(state.searchText) 
       }
-      return store.state.houses;
+      return store.getters.sortBy(state.sortByPrice) 
     });
 
     onMounted(async () => {
@@ -46,6 +51,7 @@ export default {
       ...toRefs(state),
       houses,
       search,
+      sortBy
     };
   },
   components: {

@@ -92,10 +92,6 @@ $regular: 400;
 }
 
 //  medium
-.input-field-title {
-    @extend .montserrat-Semibold;
-    font-size: 14px;
-}
 
 .empty-state-message {
     @extend .montserrat-medium;
@@ -138,6 +134,7 @@ input[type=search] {
     @extend .input-field;
     color: map-get($textColors, SECONDARY);
     width: 40%;
+    height: min-content;
     box-sizing: border-box;
     border: none;
     border-radius: 5px;
@@ -147,7 +144,7 @@ input[type=search] {
     background-position: 10px; 
     background-repeat: no-repeat;
     background-size: 15px;
-    padding: 12px 20px 12px 40px;
+    padding: 8px 10px 8px 40px;
 }
 
 input[type=search]::-webkit-search-cancel-button {

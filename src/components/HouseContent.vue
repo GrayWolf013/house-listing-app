@@ -17,6 +17,10 @@
         name="search"
         @keyup="search(searchText)"
       />
+      <div class="sort-button">
+        <button :class="{ active: sortByPrice }" class="input-field-title left" @click="sortBy(true)">Price</button>
+        <button :class="{ active: !sortByPrice }" class="input-field-title right" @click="sortBy(false)">Size</button>
+      </div>
     </div>
     <div>
       <br />
@@ -28,14 +32,14 @@
     <div v-if="housesprop.length > 0">
       <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house" />
     </div>
-    <EmptySearchView v-else class="empty-container empty-state-message center"/>
+    <EmptySearchView v-else class="empty-container empty-state-message center" />
   </div>
 </template>
 
 <script>
 import { reactive, toRefs } from "vue";
 import HouseCard from "./HouseCard.vue";
-import EmptySearchView from './EmptySearchView.vue'
+import EmptySearchView from "./EmptySearchView.vue";
 export default {
   name: "HomeContent",
   props: {
@@ -47,20 +51,27 @@ export default {
   setup(props, context) {
     const state = reactive({
       searchText: "",
+      sortByPrice: true
     });
 
     function search(searchText) {
       context.emit("search", searchText);
     }
 
+    function sortBy(price) {
+      state.sortByPrice = price
+      context.emit("sortBy", price);
+    }
+
     return {
       ...toRefs(state),
       search,
+      sortBy
     };
   },
   components: {
     HouseCard,
-    EmptySearchView
+    EmptySearchView,
   },
 };
 </script>
@@ -76,16 +87,37 @@ export default {
     justify-content: space-between;
   }
 
+  .home-body__BODY {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .sort-button {
+    .left {
+      border-radius: 6px 0 0 6px;
+    }
+    .right {
+      border-radius: 0 6px 6px 0;
+    }
+    button {
+      width: 130px;
+      height: 38px;
+      border: none;
+      color: white;
+    }
+    .active {
+      background: map-get($colors, PRIMARY);
+    }
+  }
   .btn {
     width: 160px;
-    height: 30px;
+    height: 40px;
     padding: 0 10px;
     text-align: center;
     border: none;
-    border-radius: 12px;
-    height: 45px;
+    border-radius: 6px;
     justify-content: center;
-
     font-size: 16px;
     color: #333;
     background: map-get($colors, PRIMARY);
