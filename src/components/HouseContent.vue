@@ -12,23 +12,25 @@
     <div class="home-body__BODY">
       <input
         v-model="searchText"
-        type="text"
+        type="search"
         placeholder="search for a house"
         name="search"
         @keyup="search(searchText)"
       />
     </div>
     <div>
-      <br/>
-      <div v-if="searchText && (housesprop.length > 0)" class="header2">{{ housesprop.length }} result found</div>
+      <br />
+      <div v-if="searchText && housesprop.length > 0" class="header2">
+        {{ housesprop.length }} result found
+      </div>
     </div>
-    <br/>
+    <br />
     <div v-if="housesprop.length > 0">
       <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house" />
     </div>
     <div v-else class="empty-container empty-state-message center">
       <img src="@/assets/img_empty_houses@3x.png" height="100" />
-      <div>No results found. </div>
+      <div>No results found.</div>
       <div>Please try another keyword.</div>
     </div>
   </div>

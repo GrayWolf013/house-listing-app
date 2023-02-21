@@ -8,7 +8,9 @@ export default createStore({
   
   getters: {
     search: (state) => (searchText) => {
-      return state.houses.filter(house => house.location.street.includes(searchText))
+      // check if value is event caused by clear x in input
+      if(searchText.target) return state.houses
+      return state.houses.filter(house => house.location.street.toLowerCase().includes(searchText.toLowerCase()))
     }
   },
   mutations: {
