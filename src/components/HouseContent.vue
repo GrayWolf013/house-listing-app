@@ -3,52 +3,63 @@
     <div class="home-body__TOP">
       <div class="header1">Houses</div>
       <button class="btn">
-        <div id="btn_container">
+        <div id="btn_container ">
           <img src="@/assets/ic_plus_white@3x.png" width="15" height="15" />
+          <span>CREATE NEW</span>
         </div>
-        <span>CREATE NEW</span>
       </button>
     </div>
-    <div class="home-body__TOP">
-      <input v-model="searchText" type="text" placeholder="search for a house" name="search" @keyup="search(searchText)"/>
+    <div class="home-body__BODY">
+      <input
+        v-model="searchText"
+        type="text"
+        placeholder="search for a house"
+        name="search"
+        @keyup="search(searchText)"
+      />
     </div>
-    <br>
-    <div>
-      <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house"/>
-      </div>
+    <br />
+    <div v-if="housesprop.length > 0">
+      <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house" />
     </div>
+    <div v-else class="empty-container empty-state-message center">
+      <img src="@/assets/img_empty_houses@3x.png" height="100" />
+      <div>No results found. </div>
+      <div>Please try another keyword.</div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { reactive, toRefs } from "vue"
-import HouseCard from './HouseCard.vue'
+import { reactive, toRefs } from "vue";
+import HouseCard from "./HouseCard.vue";
 
 export default {
   name: "HomeContent",
   props: {
     housesprop: {
       type: Array,
-      required: true
+      required: true,
     },
   },
-  setup(props, context) { 
+  setup(props, context) {
     const state = reactive({
-      searchText: ""
-    })
+      searchText: "",
+    });
 
     function search(searchText) {
-      context.emit('search', searchText)
+      context.emit("search", searchText);
     }
-    
+
     return {
       ...toRefs(state),
       search,
     };
   },
   components: {
-    HouseCard
-  }
-}
+    HouseCard,
+  },
+};
 </script>
 
 <style lang="scss">
@@ -63,10 +74,10 @@ export default {
   }
 
   .btn {
-    width: 200px;
-    height: 60px;
+    width: 160px;
+    height: 30px;
     padding: 0 10px;
-    text-align: left;
+    text-align: center;
     border: none;
     border-radius: 12px;
     height: 45px;
@@ -78,23 +89,28 @@ export default {
   }
 
   #btn_container {
-    width: 40px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     float: left;
   }
 
   .btn img {
-    margin-top: 8px;
     margin-right: 8px;
     vertical-align: middle;
   }
 
   .btn span {
     color: map-get($colors, BACKGROUND2);
-    display: inline-block;
     width: 120px;
     vertical-align: middle;
-    margin-top: 6px;
+    margin-top: 0px;
   }
+}
+
+.center {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+  text-align: center;
 }
 </style>
