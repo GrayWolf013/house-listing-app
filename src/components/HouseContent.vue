@@ -18,7 +18,11 @@
         @keyup="search(searchText)"
       />
     </div>
-    <br />
+    <div>
+      <br/>
+      <div v-if="searchText && (housesprop.length > 0)" class="header2">{{ housesprop.length }} result found</div>
+    </div>
+    <br/>
     <div v-if="housesprop.length > 0">
       <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house" />
     </div>
