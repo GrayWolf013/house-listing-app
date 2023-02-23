@@ -18,8 +18,20 @@
         @keyup="search(searchText)"
       />
       <div class="sort-button">
-        <button :class="{ active: sortByPrice }" class="input-field-title left" @click="sortBy(true)">Price</button>
-        <button :class="{ active: !sortByPrice }" class="input-field-title right" @click="sortBy(false)">Size</button>
+        <button
+          :class="{ active: sortByPrice }"
+          class="input-field-title left"
+          @click="sortBy(true)"
+        >
+          Price
+        </button>
+        <button
+          :class="{ active: !sortByPrice }"
+          class="input-field-title right"
+          @click="sortBy(false)"
+        >
+          Size
+        </button>
       </div>
     </div>
     <div>
@@ -30,7 +42,14 @@
     </div>
     <br />
     <div v-if="housesprop.length > 0">
-      <HouseCard v-for="house of housesprop" :key="house.id" :houseprop="house" />
+      <router-link
+        style="text-decoration: none; color: inherit"
+        v-for="house of housesprop"
+        :key="house.id"
+        :to="{ name: 'houseDetails', params: { houseId: house.id } }"
+      >
+        <HouseCard :houseprop="house" />
+      </router-link>
     </div>
     <EmptySearchView v-else class="empty-container empty-state-message center" />
   </div>
@@ -51,7 +70,7 @@ export default {
   setup(props, context) {
     const state = reactive({
       searchText: "",
-      sortByPrice: true
+      sortByPrice: true,
     });
 
     function search(searchText) {
@@ -59,14 +78,14 @@ export default {
     }
 
     function sortBy(price) {
-      state.sortByPrice = price
+      state.sortByPrice = price;
       context.emit("sortBy", price);
     }
 
     return {
       ...toRefs(state),
       search,
-      sortBy
+      sortBy,
     };
   },
   components: {

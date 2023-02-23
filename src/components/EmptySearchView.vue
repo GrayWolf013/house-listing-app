@@ -25,8 +25,6 @@
 .center {
   margin: 100px auto;
   width: 60%;
-  padding: 10px;
-  text-align: center;
 }
 
 </style>

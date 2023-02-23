@@ -26,7 +26,10 @@ export default createStore({
         return state.houses.sortBy('size')
       }
       return []
-    }
+    },
+    getById: (state) => (id) => {
+      return state.houses.filter(house => house.id.toString() == id)[0]
+    },
   },
   mutations: {
     /**

@@ -14,11 +14,11 @@
         {{ houseprop.location.zip }} {{ houseprop.location.city }}
       </div>
       <div class="listing-information text-grey">
-        <img src="@/assets/ic_bed@3x.png" alt="Italian Trulli" width="10" height="10" />
+        <img src="@/assets/ic_bed@3x.png" alt="ic_bed" width="10" height="10" />
         {{ houseprop.rooms.bedrooms }}
-        <img src="@/assets/ic_bath@3x.png" alt="Italian Trulli" width="10" height="10" />
+        <img src="@/assets/ic_bath@3x.png" alt="ic_bath" width="10" height="10" />
         {{ houseprop.rooms.bathrooms }}
-        <img src="@/assets/ic_size@3x.png" alt="Italian Trulli" width="10" height="10" />
+        <img src="@/assets/ic_size@3x.png" alt="ic_size" width="10" height="10" />
         {{ houseprop.size }} m²
       </div>
     </div>
