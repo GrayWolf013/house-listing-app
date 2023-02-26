@@ -27,7 +27,6 @@
       <br />
       <div class="icon-container listing-information">
         <img src="@/assets/ic_bed@3x.png" alt="ic_bed" width="20" height="20" />
-        <!-- <div class="spacer"></div> -->
         {{ house.rooms.bedrooms }}
         <div class="spacer"></div>
         <img src="@/assets/ic_bath@3x.png" alt="ic_bath" width="20" height="20" />
@@ -74,13 +73,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.back-button {
-  display: flex;
-  flex-direction: column;
-  img {
-    margin-right: 10px;
-  }
-}
 .card-details {
   color: map-get($colors, SECONDARY);
   padding-bottom: 50px;

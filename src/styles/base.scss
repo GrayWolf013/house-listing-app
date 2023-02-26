@@ -116,7 +116,7 @@ $regular: 400;
 
 .input-field {
     @extend .openSans-Regular;
-    font-size: 40px;
+    font-size: 14px;
 }
 
 .text-grey {
@@ -127,8 +127,8 @@ $regular: 400;
 // global styles 
 
 body {
-    margin: 0;
     background-color: map-get($colors, BACKGROUND1);
+    color: map-get($textColors, PRIMARY);
 }
 input[type=search] {
     @extend .input-field;
@@ -138,7 +138,6 @@ input[type=search] {
     box-sizing: border-box;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
     background-color: rgb(222, 222, 222);
     background-image: url("/src/assets/ic_search@3x.png");
     background-position: 10px; 
@@ -150,3 +149,28 @@ input[type=search] {
 input[type=search]::-webkit-search-cancel-button {
     -webkit-appearance: searchfield-cancel-button;
 }
+
+input[type=text], textarea {
+    @extend .input-field;
+    color: map-get($textColors, SECONDARY);
+    width: 435px;
+    height: min-content;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+    background-color: map-get($colors, BACKGROUND2);
+    padding: 8px 15px 8px 15px;
+}
+
+.btn {
+    width: 160px;
+    height: 40px;
+    padding: 0 10px;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    justify-content: center;
+    font-size: 16px;
+    color: #fff;
+    background: map-get($colors, PRIMARY);
+  }
