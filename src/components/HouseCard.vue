@@ -8,7 +8,9 @@
       alt="HouseImg"
     />
     <div class="container">
-      <div class="tab-button element">{{ houseprop.location.street }}</div>
+      <div class="card-header tab-button element">{{ houseprop.location.street }}
+        <img v-if="houseprop.madeByMe" src="@/assets/ic_delete@3x.png" alt="delete-icon" width="15" height="15" >
+      </div>
       <div class="body-text element">€ {{ houseprop.price.toLocaleString('en-US') }}</div>
       <div class="listing-information text-grey element">
         {{ houseprop.location.zip }} {{ houseprop.location.city }}
@@ -50,7 +52,11 @@ export default {
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
+.card-header {
+  display: flex;
+  justify-content: space-between;
 
+}
   .image {
     border-radius: 15px;
     padding: 10px;
@@ -60,6 +66,7 @@ export default {
 
   .container {
     margin: 20px 0 0 20px;
+    width: 80%;
     .element {
       margin-bottom: 5px;
     }
