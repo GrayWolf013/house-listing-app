@@ -76,6 +76,7 @@ export default {
 <style lang="scss" scoped>
 .back-button {
   display: flex;
+  flex-direction: column;
   img {
     margin-right: 10px;
   }

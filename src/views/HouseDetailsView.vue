@@ -1,12 +1,14 @@
 <template>
   <div class="center">
-    <router-link to="/" class="back-button" style="text-decoration: none; color: inherit">
-      <img src="@/assets/ic_back_grey@3x.png" alt="ic_back" width="20" height="20" />
-      <div class="back-button-label">Back to overview</div>
+    <router-link to="/" style="text-decoration: none; color: inherit">
+      <div class="back-button">
+        <img src="@/assets/ic_back_grey@3x.png" alt="ic_back" width="20" height="20" />
+        <div class="back-button-label">Back to overview</div>
+      </div>
     </router-link>
     <br />
     <br />
-    <HouseDetailsCard :house="house"/>
+    <HouseDetailsCard :house="house" />
   </div>
 </template>
 
@@ -14,7 +16,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import HouseDetailsCard from "@/components/HouseDetailsCard.vue"
+import HouseDetailsCard from "@/components/HouseDetailsCard.vue";
 
 export default {
   setup() {
@@ -30,42 +32,16 @@ export default {
     };
   },
   components: {
-    HouseDetailsCard
-  }
+    HouseDetailsCard,
+  },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 .back-button {
   display: flex;
   img {
     margin-right: 10px;
-  }
-}
-.card-details {
-  color: map-get($colors, SECONDARY);
-  padding-bottom: 50px;
-  .container {
-    margin: 40px 40px 0 40px;
-  }
-  .house-details-image {
-    width: 100%;
-  }
-  background-color: white;
-  .icon-container {
-    display: flex;
-  }
-  .desc-container {
-    display: grid;
-    text-align: left;
-  }
-  .container {
-    img {
-      margin: 0px 5px 0px 0px;
-    }
-  }
-  .spacer {
-    width: 40px;
   }
 }
 </style>

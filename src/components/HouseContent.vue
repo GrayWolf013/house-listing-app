@@ -2,12 +2,17 @@
   <div class="home-body">
     <div class="home-body__TOP">
       <div class="header1">Houses</div>
+      <router-link
+        style="text-decoration: none; color: inherit"
+        :to="{ name: 'createHouse' }"
+      >
       <button class="btn">
         <div id="btn_container ">
           <img src="@/assets/ic_plus_white@3x.png" width="15" height="15" />
           <span>CREATE NEW</span>
         </div>
       </button>
+      </router-link>
     </div>
     <div class="home-body__BODY">
       <input
