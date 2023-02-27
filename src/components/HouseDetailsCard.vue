@@ -1,19 +1,45 @@
 <template>
   <div class="card-details">
-    <img class="house-details-image" :src="house.image" alt="house imag" />
+    <img
+      class="house-details-image"
+      v-if="house.image"
+      :src="house.image"
+      alt="HouseImg"
+    />
+    <img
+      class="house-details-image"
+      v-else
+      src="@/assets/img_placeholder_house@3x.png"
+      alt="HouseImg"
+    />
     <div class="container">
       <div class="tab-button element">{{ house.location.street }}</div>
       <br />
       <div class="icon-container listing-information">
-        <img src="@/assets/ic_location@3x.png" alt="ic_bed" width="20" height="20" />
+        <img
+          src="@/assets/ic_location@3x.png"
+          alt="ic_bed"
+          width="20"
+          height="20"
+        />
         {{ house.location.zip }} {{ house.location.city }}
       </div>
       <br />
       <div class="icon-container listing-information">
-        <img src="@/assets/ic_price@3x.png" alt="ic_price" width="20" height="20" />
+        <img
+          src="@/assets/ic_price@3x.png"
+          alt="ic_price"
+          width="20"
+          height="20"
+        />
         {{ house.price.toLocaleString("en-US") }}
         <div class="spacer"></div>
-        <img src="@/assets/ic_size@3x.png" alt="ic_size" width="20" height="20" />
+        <img
+          src="@/assets/ic_size@3x.png"
+          alt="ic_size"
+          width="20"
+          height="20"
+        />
         {{ house.size }} m²
         <div class="spacer"></div>
         <img
@@ -29,10 +55,20 @@
         <img src="@/assets/ic_bed@3x.png" alt="ic_bed" width="20" height="20" />
         {{ house.rooms.bedrooms }}
         <div class="spacer"></div>
-        <img src="@/assets/ic_bath@3x.png" alt="ic_bath" width="20" height="20" />
+        <img
+          src="@/assets/ic_bath@3x.png"
+          alt="ic_bath"
+          width="20"
+          height="20"
+        />
         {{ house.rooms.bathrooms }}
         <div class="spacer"></div>
-        <img src="@/assets/ic_garage@3x.png" alt="ic_garage" width="20" height="20" />
+        <img
+          src="@/assets/ic_garage@3x.png"
+          alt="ic_garage"
+          width="20"
+          height="20"
+        />
         {{ hasGarageToHumain(house.hasGarage) }}
       </div>
       <br /><br />
@@ -66,7 +102,7 @@ export default {
 
     return {
       ...toRefs(state),
-      hasGarageToHumain
+      hasGarageToHumain,
     };
   },
 };
