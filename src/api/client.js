@@ -22,4 +22,15 @@ export default {
       .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))
   },
+
+  delete(url, id) {
+    const requestOptions = {
+      method: "DELETE",
+      headers: headers,
+    }
+    const requestUrl = `${baseUrl}${url}/${id}`
+    return fetch(requestUrl, requestOptions)
+      .then(response => Promise.resolve(response))
+      .catch(error => Promise.reject(error))
+  },
 };
