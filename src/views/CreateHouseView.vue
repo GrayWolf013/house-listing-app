@@ -3,78 +3,141 @@
     <div class="create-house-container">
       <router-link to="/" style="text-decoration: none; color: inherit">
         <div class="back-button">
-          <img src="@/assets/ic_back_grey@3x.png" alt="ic_back" width="20" height="20" />
+          <img
+            src="@/assets/ic_back_grey@3x.png"
+            alt="ic_back"
+            width="20"
+            height="20"
+          />
           <div class="back-button-label">Back to overview</div>
         </div>
       </router-link>
       <div>
         <div class="header1">Create new listing</div>
-        <div class="input-field-title">Street name*</div>
-        <input
-          type="text"
-          placeholder="Enter the street name"
-          v-model="house.streetName"
-        />
-        <div class="flex">
-          <div>
-            <div class="input-field-title">House number*</div>
-            <input
-              type="number"
-              placeholder="Enter the house number"
-              v-model="house.houseNumber"
-            />
+        <form @submit.prevent="createHouseListing">
+          <div class="input-field-title">Street name*</div>
+          <input
+            type="text"
+            placeholder="Enter the street name"
+            v-model="house.streetName"
+            :class="{ error: !house.streetName && buttonClicked }"
+            required
+          />
+          <div class="flex">
+            <div>
+              <div class="input-field-title">House number*</div>
+              <input
+                type="number"
+                placeholder="Enter the house number"
+                v-model="house.houseNumber"
+                :class="{ error: !house.houseNumber && buttonClicked }"
+                required
+              />
+            </div>
+            <div class="spacer" />
+            <div>
+              <div class="input-field-title">Addition (optional)</div>
+              <input
+                type="number"
+                placeholder="e.g. A"
+                v-model="house.numberAddition"
+              />
+            </div>
           </div>
-          <div class="spacer" />
-          <div>
-            <div class="input-field-title">Addition (optional)</div>
-            <input type="number" placeholder="e.g. A" v-model="house.numberAddition" />
+          <div class="input-field-title">Postal Code*</div>
+          <input
+            type="text"
+            placeholder="e.g. 1000 AA"
+            v-model="house.zip"
+            :class="{ error: !house.zip && buttonClicked }"
+            required
+          />
+          <div class="input-field-title">City*</div>
+          <input
+            type="text"
+            placeholder="e.g. Utrecht"
+            v-model="house.city"
+            :class="{ error: !house.city && buttonClicked }"
+            required
+          />
+          <div class="input-field-title">Upload picture (PNG or JPG)*</div>
+          <img src="@/assets/ic_upload@3x.png" alt="upload" />
+          <div class="input-field-title">Price*</div>
+          <input
+            type="number"
+            placeholder="e.g. €150.000"
+            v-model="house.price"
+            :class="{ error: !house.price && buttonClicked }"
+            required
+          />
+          <div class="flex">
+            <div>
+              <div class="input-field-title">Size*</div>
+              <input
+                type="number"
+                placeholder="e.g. 60m²"
+                v-model="house.size"
+                :class="{ error: !house.size && buttonClicked }"
+                required
+              />
+            </div>
+            <div class="spacer" />
+            <div>
+              <div class="input-field-title">Garage*</div>
+              <input
+                type="text"
+                placeholder="Select"
+                v-model="house.hasGarage"
+              />
+            </div>
           </div>
-        </div>
-        <div class="input-field-title">Postal Code*</div>
-        <input type="text" placeholder="e.g. 1000 AA" v-model="house.zip" />
-        <div class="input-field-title">City*</div>
-        <input type="text" placeholder="e.g. Utrecht" v-model="house.city" />
-        <div class="input-field-title">Upload picture (PNG or JPG)*</div>
-        <img src="@/assets/ic_upload@3x.png" alt="upload" />
-        <div class="input-field-title">Price*</div>
-        <input type="number" placeholder="e.g. €150.000" v-model="house.price" />
-        <div class="flex">
-          <div>
-            <div class="input-field-title">Size*</div>
-            <input type="number" placeholder="e.g. 60m²" v-model="house.size" />
+          <div class="flex">
+            <div>
+              <div class="input-field-title">Bedrooms*</div>
+              <input
+                type="number"
+                placeholder="Enter amount"
+                v-model="house.bedrooms"
+                :class="{ error: !house.bedrooms && buttonClicked }"
+                required
+              />
+            </div>
+            <div class="spacer" />
+            <div>
+              <div class="input-field-title">Bathrooms*</div>
+              <input
+                type="number"
+                placeholder="Enter amount"
+                v-model="house.bathrooms"
+                :class="{ error: !house.bathrooms && buttonClicked }"
+                required
+              />
+            </div>
           </div>
-          <div class="spacer" />
-          <div>
-            <div class="input-field-title">Garage*</div>
-            <input type="text" placeholder="Select" v-model="house.hasGarage" />
+          <div class="input-field-title">Construction date*</div>
+          <input
+            type="number"
+            placeholder="e.g. 1900"
+            v-model="house.constructionYear"
+            :class="{ error: !house.constructionYear && buttonClicked }"
+            required
+          />
+          <div class="input-field-title">Description*</div>
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="Enter description"
+            v-model="house.description"
+            :class="{ error: !house.description && buttonClicked }"
+            required
+          />
+          <div class="btn-container">
+            <button class="btn" @click="submitButtonClicked">POST</button>
           </div>
-        </div>
-        <div class="flex">
-          <div>
-            <div class="input-field-title">Bedrooms*</div>
-            <input type="number" placeholder="Enter amount" v-model="house.bedrooms" />
-          </div>
-          <div class="spacer" />
-          <div>
-            <div class="input-field-title">Bathrooms*</div>
-            <input type="number" placeholder="Enter amount" v-model="house.bathrooms" />
-          </div>
-        </div>
-        <div class="input-field-title">Construction date*</div>
-        <input type="number" placeholder="e.g. 1900" v-model="house.constructionYear" />
-        <div class="input-field-title">Description*</div>
-        <textarea
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          placeholder="Enter description"
-          v-model="house.description"
-        />
-        <div class="btn-container">
-          <button class="btn" @click="createHouseListing">POST</button>
-        </div>
-        <br />
+          <br />
+        </form>
       </div>
     </div>
   </div>
@@ -83,7 +146,7 @@
 <script>
 import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -91,28 +154,33 @@ export default {
     const router = useRouter();
 
     const state = reactive({
+      buttonClicked: false,
       house: {
         streetName: "",
-        houseNumber: 0,
-        numberAddition: 0,
+        houseNumber: null,
+        numberAddition: null,
         zip: "",
         city: "",
-        price: 0,
-        size: 0,
+        price: null,
+        size: null,
         hasGarage: false,
-        bedrooms: 0,
-        bathrooms: 0,
-        constructionYear: 0,
+        bedrooms: null,
+        bathrooms: null,
+        constructionYear: null,
         description: "",
       },
     });
+
+    function submitButtonClicked(){
+      state.buttonClicked = true;
+    }
 
     function createHouseListing() {
       store
         .dispatch("createHouse", state.house)
         .then(() => {
           // API success
-          router.push({ name: 'home' })
+          router.push({ name: "home" });
           console.log("data created");
         })
         .catch(() => {
@@ -124,6 +192,7 @@ export default {
     return {
       ...toRefs(state),
       createHouseListing,
+      submitButtonClicked
     };
   },
 };
@@ -157,6 +226,23 @@ export default {
     }
     .btn-container {
       margin: 50px 275px;
+    }
+    .error {
+      border: 1px solid red;
+      &::placeholder {
+        color: red;
+        opacity: 1; /* Firefox */
+      }
+
+      &:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: red;
+      }
+
+      &::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: red;
+      }
     }
   }
 }
