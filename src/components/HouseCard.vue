@@ -21,6 +21,7 @@
           alt="delete-icon"
           width="15"
           height="15"
+          @click.prevent="deleteHouse(houseprop.id)"
         />
       </div>
       <div class="body-text element">
@@ -52,6 +53,8 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+
 export default {
   name: "HouseCard",
   props: {
@@ -61,7 +64,21 @@ export default {
     },
   },
   setup() {
-    function deleteHouse() {}
+    const store = useStore();
+
+    function deleteHouse(id) {
+      store
+        .dispatch("deleteHouse", id)
+        .then(() => {
+          // API success
+          console.log("data deleted");
+        })
+        .catch(() => {
+          // API fail
+          console.log("error in request delete");
+        });
+    }
+
     return {
       deleteHouse,
     };
@@ -94,7 +111,7 @@ export default {
 
   .container {
     margin: 20px 0 0 20px;
-    width: 80%;
+    width: 78%;
     .element {
       margin-bottom: 5px;
     }

@@ -18,7 +18,6 @@ export default {
       headers: headers,
       body: JSON.stringify( body )
     }
-    console.log(requestOptions)
     return fetch(baseUrl + url, requestOptions)
       .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))

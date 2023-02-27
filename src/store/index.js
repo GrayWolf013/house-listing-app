@@ -32,6 +32,9 @@ export default createStore({
     getById: (state) => (id) => {
       return state.houses.filter((house) => house.id.toString() == id)[0];
     },
+    removeElement: (state) => (id) => {
+      return state.houses.filter((house) => house.id.toString() != id);
+    },
   },
   mutations: {
     /**
@@ -69,8 +72,15 @@ export default createStore({
         .catch((error) => console.error(error));
     },
 
-    // deleteHouse({ commit }, id) {
-
-    // },
+    deleteHouse({ commit, getters }, id) {
+      Api.delete("/houses", id)
+        .then(() =>
+          commit("updateProperty", {
+            property: "houses",
+            value: getters.removeElement(id),
+          })
+        )
+        .catch((error) => console.error(error));
+    },
   },
 });
