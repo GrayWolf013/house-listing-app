@@ -109,8 +109,11 @@ export default createStore({
     },
 
     editHouse(context, data) {
-      Api.edit("/houses", { id: data.id, body: data.body })
-        .catch((error) => console.error(error));
+      Api.edit("/houses", data).catch((error) => console.error(error));
+    },
+
+    uploadHouseImg(context, data) {
+      Api.upload("/houses", data).catch((error) => console.error(error));
     },
 
     deleteHouse({ commit, getters }, id) {

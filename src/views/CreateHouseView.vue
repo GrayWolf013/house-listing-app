@@ -163,11 +163,62 @@ export default {
     const state = reactive({
       buttonClicked: false,
       previewImage: null,
+      image: null
     });
 
     const house = computed(() => {
       return store.getters.getByIdEditModel(route.params.houseId);
     });
+
+
+    // function uploadImageTest() {
+    //   const formData = new FormData();
+    //   formData.append('image', state.image);
+    //   const apiKey = "PBknlDMOSUux9sEyo0ivKtma64f13FVR";
+
+    //   fetch(`https://api.intern.d-tt.nl/api/houses/${route.params.houseId}/upload`, {
+    //     method: 'POST',
+    //     headers: {
+    //       "X-Api-Key": apiKey,
+    //     },
+    //     body: formData
+    //   })
+    //   .then(response => {
+    //     if (response.ok) {
+    //       console.log('Image uploaded successfully');
+    //     } else {
+    //       console.error('Error uploading image');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.error('Error uploading image', error);
+    //   });
+    // }
+
+
+    function uploadHouseListingImage() {
+      const formData = new FormData()
+      formData.append('image', state.image)
+
+      console.log('formData')
+      console.log(state.image)
+      console.log(state.image.name)
+      console.log(formData.getAll)
+      console.log('formData')
+
+      if (state.previewImage) {
+        store
+        .dispatch("uploadHouseImg", { id: route.params.houseId, body: formData})
+        .then(() => {
+          // API success
+          console.log("img uploaded");
+        })
+        .catch((e) => {
+          // API fail
+          console.log("error in request upload", e);
+        });
+      }
+    }
 
     function submitButtonClicked() {
       state.buttonClicked = true;
@@ -178,13 +229,15 @@ export default {
         .dispatch("editHouse", { id: route.params.houseId, body: house.value })
         .then(() => {
           // API success
-          router.push({ name: "home" });
+          uploadHouseListingImage()
           console.log("data edited");
         })
+        .finally(() => router.push({ name: "home" }))
         .catch((e) => {
           // API fail
           console.log("error in request edit", e);
         });
+      
     }
 
     function createHouseListing() {
@@ -208,6 +261,7 @@ export default {
 
     function uploadImage(e) {
       const image = e.target.files[0];
+      state.image = image
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onload = (e) => {

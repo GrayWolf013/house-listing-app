@@ -1,48 +1,68 @@
-const apiKey = "PBknlDMOSUux9sEyo0ivKtma64f13FVR"
+const apiKey = "PBknlDMOSUux9sEyo0ivKtma64f13FVR";
 const headers = {
   "Content-Type": "application/json",
   "X-Api-Key": apiKey,
-}
-const baseUrl = "https://api.intern.d-tt.nl/api"
+};
+const baseUrl = "https://api.intern.d-tt.nl/api";
 
 export default {
   get(url) {
     return fetch(baseUrl + url, { headers })
-      .then(response => Promise.resolve(response.json()))
-      .catch(error => Promise.reject(error))
+      .then((response) => Promise.resolve(response.json()))
+      .catch((error) => Promise.reject(error));
   },
 
   post(url, body) {
     const requestOptions = {
       method: "POST",
       headers: headers,
-      body: JSON.stringify( body )
-    }
+      body: JSON.stringify(body),
+    };
     return fetch(baseUrl + url, requestOptions)
-      .then(response => Promise.resolve(response))
-      .catch(error => Promise.reject(error))
+      .then((response) => Promise.resolve(response))
+      .catch((error) => Promise.reject(error));
   },
 
   edit(url, data) {
     const requestOptions = {
       method: "POST",
       headers: headers,
-      body: JSON.stringify( data.body )
-    }
-    const requestUrl = `${baseUrl}${url}/${data.id}`
+      body: JSON.stringify(data.body),
+    };
+    const requestUrl = `${baseUrl}${url}/${data.id}`;
     return fetch(requestUrl, requestOptions)
-      .then(response => Promise.resolve(response))
-      .catch(error => Promise.reject(error))
+      .then((response) => Promise.resolve(response))
+      .catch((error) => Promise.reject(error));
   },
 
   delete(url, id) {
     const requestOptions = {
       method: "DELETE",
       headers: headers,
-    }
-    const requestUrl = `${baseUrl}${url}/${id}`
+    };
+    const requestUrl = `${baseUrl}${url}/${id}`;
     return fetch(requestUrl, requestOptions)
-      .then(response => Promise.resolve(response))
-      .catch(error => Promise.reject(error))
+      .then((response) => Promise.resolve(response))
+      .catch((error) => Promise.reject(error));
+  },
+
+  upload(url, data) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        // "Content-Type": "multipart/form-data",
+        "X-Api-Key": apiKey,
+      },
+      body: data.body,
+    };
+    const requestUrl = `${baseUrl}${url}/${data.id}/upload`;
+    console.log("upload");
+    console.log(requestUrl);
+    console.log(data.body);
+    console.log("upload");
+
+    return fetch(requestUrl, requestOptions)
+      .then((response) => Promise.resolve(response))
+      .catch((error) => Promise.reject(error));
   },
 };
