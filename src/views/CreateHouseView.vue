@@ -62,7 +62,12 @@
             required
           />
           <div class="input-field-title">Upload picture (PNG or JPG)*</div>
-          <img src="@/assets/ic_upload@3x.png" alt="upload" />
+
+          <div>
+            <img v-if="previewImage" :src="previewImage" alt="upload" class="uploading-image"/>
+            <img v-else src="@/assets/ic_upload@3x.png" class="uploading-image"/>
+            <input type="file" accept="image/jpeg" @change="uploadImage">
+          </div>
           <div class="input-field-title">Price*</div>
           <input
             type="number"
@@ -157,6 +162,7 @@ export default {
 
     const state = reactive({
       buttonClicked: false,
+      previewImage: null,
     });
 
     const house = computed(() => {
@@ -167,10 +173,9 @@ export default {
       state.buttonClicked = true;
     }
 
-
     function editHouseListing() {
       store
-        .dispatch("editHouse",{ id: route.params.houseId, body: house.value })
+        .dispatch("editHouse", { id: route.params.houseId, body: house.value })
         .then(() => {
           // API success
           router.push({ name: "home" });
@@ -197,8 +202,18 @@ export default {
     }
 
     function submitForm() {
-      if (route.params.houseId) editHouseListing()
-      else createHouseListing()
+      if (route.params.houseId) editHouseListing();
+      else createHouseListing();
+    }
+
+    function uploadImage(e) {
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = (e) => {
+        this.previewImage = e.target.result;
+        console.log(this.previewImage);
+      };
     }
 
     return {
@@ -206,6 +221,7 @@ export default {
       house,
       submitForm,
       submitButtonClicked,
+      uploadImage,
       route,
     };
   },
@@ -240,6 +256,11 @@ export default {
     }
     .btn-container {
       margin: 50px 275px;
+    }
+    .uploading-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 5px;
     }
     .error {
       border: 1px solid red;
