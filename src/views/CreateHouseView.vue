@@ -188,12 +188,16 @@ export default {
       formData.append("image", state.image);
       if (state.previewImage) {
         store
-          .dispatch("uploadHouseImg", { id: id, body: formData })
+          .dispatch("uploadHouseImg", {
+            id: id,
+            body: formData,
+            value: state.previewImage,
+          })
           .then(() => {
             // API success
             console.log("img uploaded");
+            router.push({ name: "home" });
           })
-          .finally(() => router.push({ name: "home" }))
           .catch((e) => {
             // API fail
             console.log("error in request upload", e);

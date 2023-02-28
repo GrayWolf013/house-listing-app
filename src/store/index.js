@@ -90,6 +90,18 @@ export default createStore({
     appendProperty: (state, data) => {
       state[data.property].push(data.value);
     },
+
+    /**
+     * Edit a specific property in an array in the store
+     * @param {object} state The store's state
+     * @param {object} data An object containing the array, id, property and value
+     */
+    editProperty: (state, data) => {
+      state[data.array].forEach((element) => {
+        if (element.id.toString() == data.id)
+          element[data.property] = data.value;
+      });
+    },
   },
 
   actions: {
@@ -101,37 +113,35 @@ export default createStore({
         .catch((error) => console.error(error));
     },
 
-    // createHouse(context, body) {
-    //   Api.post("/houses", body)
-    //     // .then((response) => response)
-
-    //     .then((response) => console.log(response))
-    //     // .then((data) =>
-    //     //   commit("appendProperty", { property: "houses", value: data })
-    //     // )
-    //     .catch((error) => console.error(error));
-    // },
-
     createHouse({ commit }, body) {
       return new Promise((resolve, reject) => {
         Api.post("/houses", body)
-          .then(data => {
-            commit("appendProperty", { property: "houses", value: data })
+          .then((data) => {
+            commit("appendProperty", { property: "houses", value: data });
             resolve(data);
           })
-          .catch(error => {
+          .catch((error) => {
             reject(error);
           });
       });
     },
 
-
     editHouse(context, data) {
       Api.edit("/houses", data).catch((error) => console.error(error));
     },
 
-    uploadHouseImg(context, data) {
-      Api.upload("/houses", data).catch((error) => console.error(error));
+    uploadHouseImg({ commit }, data) {
+      Api.upload("/houses", data)
+        .then(() =>
+          commit("editProperty", {
+            array: "houses",
+            id: data.id,
+            property: "image",
+            value: data.value,
+          })
+        )
+
+        .catch((error) => console.error(error));
     },
 
     deleteHouse({ commit, getters }, id) {
