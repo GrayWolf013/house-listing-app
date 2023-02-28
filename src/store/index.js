@@ -108,16 +108,10 @@ export default createStore({
         .catch((error) => console.error(error));
     },
 
-    // editHouse({ commit, getters }, id) {
-    //   Api.delete("/houses", id)
-    //     .then(() =>
-    //       commit("updateProperty", {
-    //         property: "houses",
-    //         value: getters.removeElement(id),
-    //       })
-    //     )
-    //     .catch((error) => console.error(error));
-    // },
+    editHouse(context, data) {
+      Api.edit("/houses", { id: data.id, body: data.body })
+        .catch((error) => console.error(error));
+    },
 
     deleteHouse({ commit, getters }, id) {
       Api.delete("/houses", id)

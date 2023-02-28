@@ -15,7 +15,7 @@
       <div>
         <div v-if="route.params.houseId" class="header1">Edit dlisting</div>
         <div v-else class="header1">Create new listing</div>
-        <form @submit.prevent="createHouseListing">
+        <form @submit.prevent="submitForm">
           <div class="input-field-title">Street name*</div>
           <input
             type="text"
@@ -167,8 +167,22 @@ export default {
       state.buttonClicked = true;
     }
 
+
+    function editHouseListing() {
+      store
+        .dispatch("editHouse",{ id: route.params.houseId, body: house.value })
+        .then(() => {
+          // API success
+          router.push({ name: "home" });
+          console.log("data edited");
+        })
+        .catch((e) => {
+          // API fail
+          console.log("error in request edit", e);
+        });
+    }
+
     function createHouseListing() {
-      console.log(house.value);
       store
         .dispatch("createHouse", house.value)
         .then(() => {
@@ -182,10 +196,15 @@ export default {
         });
     }
 
+    function submitForm() {
+      if (route.params.houseId) editHouseListing()
+      else createHouseListing()
+    }
+
     return {
       ...toRefs(state),
       house,
-      createHouseListing,
+      submitForm,
       submitButtonClicked,
       route,
     };

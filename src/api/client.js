@@ -23,6 +23,18 @@ export default {
       .catch(error => Promise.reject(error))
   },
 
+  edit(url, data) {
+    const requestOptions = {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify( data.body )
+    }
+    const requestUrl = `${baseUrl}${url}/${data.id}`
+    return fetch(requestUrl, requestOptions)
+      .then(response => Promise.resolve(response))
+      .catch(error => Promise.reject(error))
+  },
+
   delete(url, id) {
     const requestOptions = {
       method: "DELETE",
