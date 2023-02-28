@@ -13,10 +13,8 @@
         </div>
       </router-link>
       <div>
-      
-        <div v-if="route.params.houseId" class="header1">Edit dlisting </div>
+        <div v-if="route.params.houseId" class="header1">Edit dlisting</div>
         <div v-else class="header1">Create new listing</div>
-
         <form @submit.prevent="createHouseListing">
           <div class="input-field-title">Street name*</div>
           <input
@@ -170,7 +168,7 @@ export default {
     }
 
     function createHouseListing() {
-      console.log(house.value)
+      console.log(house.value);
       store
         .dispatch("createHouse", house.value)
         .then(() => {
@@ -189,7 +187,7 @@ export default {
       house,
       createHouseListing,
       submitButtonClicked,
-      route
+      route,
     };
   },
 };
