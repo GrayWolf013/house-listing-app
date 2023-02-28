@@ -64,9 +64,24 @@
           <div class="input-field-title">Upload picture (PNG or JPG)*</div>
 
           <div>
-            <img v-if="previewImage" :src="previewImage" alt="upload" class="uploading-image"/>
-            <img v-else src="@/assets/ic_upload@3x.png" class="uploading-image"/>
-            <input type="file" accept="image/jpeg" @change="uploadImage">
+            <img
+              v-if="previewImage"
+              :src="previewImage"
+              alt="upload"
+              class="uploading-image"
+            />
+            <img
+              v-else-if="house.image"
+              :src="house.image"
+              alt="upload"
+              class="uploading-image"
+            />
+            <img
+              v-else
+              src="@/assets/ic_upload@3x.png"
+              class="uploading-image"
+            />
+            <input type="file" accept="image/jpeg" @change="uploadImage" />
           </div>
           <div class="input-field-title">Price*</div>
           <input
@@ -130,8 +145,6 @@
           />
           <div class="input-field-title">Description*</div>
           <textarea
-            name=""
-            id=""
             cols="30"
             rows="10"
             placeholder="Enter description"
@@ -163,60 +176,30 @@ export default {
     const state = reactive({
       buttonClicked: false,
       previewImage: null,
-      image: null
+      image: null,
     });
 
     const house = computed(() => {
       return store.getters.getByIdEditModel(route.params.houseId);
     });
 
-
-    // function uploadImageTest() {
-    //   const formData = new FormData();
-    //   formData.append('image', state.image);
-    //   const apiKey = "PBknlDMOSUux9sEyo0ivKtma64f13FVR";
-
-    //   fetch(`https://api.intern.d-tt.nl/api/houses/${route.params.houseId}/upload`, {
-    //     method: 'POST',
-    //     headers: {
-    //       "X-Api-Key": apiKey,
-    //     },
-    //     body: formData
-    //   })
-    //   .then(response => {
-    //     if (response.ok) {
-    //       console.log('Image uploaded successfully');
-    //     } else {
-    //       console.error('Error uploading image');
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.error('Error uploading image', error);
-    //   });
-    // }
-
-
-    function uploadHouseListingImage() {
-      const formData = new FormData()
-      formData.append('image', state.image)
-
-      console.log('formData')
-      console.log(state.image)
-      console.log(state.image.name)
-      console.log(formData.getAll)
-      console.log('formData')
-
+    function uploadHouseListingImage(id) {
+      const formData = new FormData();
+      formData.append("image", state.image);
       if (state.previewImage) {
         store
-        .dispatch("uploadHouseImg", { id: route.params.houseId, body: formData})
-        .then(() => {
-          // API success
-          console.log("img uploaded");
-        })
-        .catch((e) => {
-          // API fail
-          console.log("error in request upload", e);
-        });
+          .dispatch("uploadHouseImg", { id: id, body: formData })
+          .then(() => {
+            // API success
+            console.log("img uploaded");
+          })
+          .finally(() => router.push({ name: "home" }))
+          .catch((e) => {
+            // API fail
+            console.log("error in request upload", e);
+          });
+      } else {
+        router.push({ name: "home" });
       }
     }
 
@@ -229,25 +212,28 @@ export default {
         .dispatch("editHouse", { id: route.params.houseId, body: house.value })
         .then(() => {
           // API success
-          uploadHouseListingImage()
+          uploadHouseListingImage(route.params.houseId);
           console.log("data edited");
         })
-        .finally(() => router.push({ name: "home" }))
         .catch((e) => {
           // API fail
           console.log("error in request edit", e);
         });
-      
     }
 
     function createHouseListing() {
       store
         .dispatch("createHouse", house.value)
-        .then(() => {
+        .then((data) => {
           // API success
-          router.push({ name: "home" });
+          console.log("data.id");
+          console.log(data.id);
+          console.log("data.id");
+
+          uploadHouseListingImage(data.id);
           console.log("data created");
         })
+        // .finally(() => router.push({ name: "home" }))
         .catch((e) => {
           // API fail
           console.log("error in request create", e);
@@ -261,7 +247,7 @@ export default {
 
     function uploadImage(e) {
       const image = e.target.files[0];
-      state.image = image
+      state.image = image;
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onload = (e) => {

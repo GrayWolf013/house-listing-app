@@ -19,7 +19,7 @@ export default {
       body: JSON.stringify(body),
     };
     return fetch(baseUrl + url, requestOptions)
-      .then((response) => Promise.resolve(response))
+      .then((response) => Promise.resolve(response.json()))
       .catch((error) => Promise.reject(error));
   },
 
@@ -50,17 +50,11 @@ export default {
     const requestOptions = {
       method: "POST",
       headers: {
-        // "Content-Type": "multipart/form-data",
         "X-Api-Key": apiKey,
       },
       body: data.body,
     };
     const requestUrl = `${baseUrl}${url}/${data.id}/upload`;
-    console.log("upload");
-    console.log(requestUrl);
-    console.log(data.body);
-    console.log("upload");
-
     return fetch(requestUrl, requestOptions)
       .then((response) => Promise.resolve(response))
       .catch((error) => Promise.reject(error));

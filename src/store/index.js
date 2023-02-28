@@ -57,6 +57,7 @@ export default createStore({
         const model = getters.getById(id);
         if (model) {
           house.streetName = model.location.street;
+          house.image = model.image;
           house.zip = model.location.zip;
           house.city = model.location.city;
           house.price = model.price;
@@ -100,13 +101,30 @@ export default createStore({
         .catch((error) => console.error(error));
     },
 
+    // createHouse(context, body) {
+    //   Api.post("/houses", body)
+    //     // .then((response) => response)
+
+    //     .then((response) => console.log(response))
+    //     // .then((data) =>
+    //     //   commit("appendProperty", { property: "houses", value: data })
+    //     // )
+    //     .catch((error) => console.error(error));
+    // },
+
     createHouse({ commit }, body) {
-      Api.post("/houses", body)
-        .then((data) =>
-          commit("appendProperty", { property: "houses", value: data })
-        )
-        .catch((error) => console.error(error));
+      return new Promise((resolve, reject) => {
+        Api.post("/houses", body)
+          .then(data => {
+            commit("appendProperty", { property: "houses", value: data })
+            resolve(data);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     },
+
 
     editHouse(context, data) {
       Api.edit("/houses", data).catch((error) => console.error(error));
