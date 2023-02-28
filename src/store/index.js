@@ -30,10 +30,46 @@ export default createStore({
       return [];
     },
     getById: (state) => (id) => {
-      return state.houses.filter((house) => house.id.toString() == id)[0];
+      return (
+        state.houses.filter((house) => house.id.toString() == id)[0] ?? null
+      );
     },
     removeElement: (state) => (id) => {
       return state.houses.filter((house) => house.id.toString() != id);
+    },
+
+    getByIdEditModel: (state, getters) => (id) => {
+      var house = {
+        streetName: "",
+        houseNumber: null,
+        numberAddition: null,
+        zip: "",
+        city: "",
+        price: null,
+        size: null,
+        hasGarage: false,
+        bedrooms: null,
+        bathrooms: null,
+        constructionYear: null,
+        description: "",
+      };
+      if (id) {
+        const model = getters.getById(id);
+        if (model) {
+          house.streetName = model.location.street;
+          house.zip = model.location.zip;
+          house.city = model.location.city;
+          house.price = model.price;
+          house.size = model.size;
+          house.hasGarage = model.hasGarage;
+          house.bedrooms = model.rooms.bedrooms;
+          house.bathrooms = model.rooms.bathrooms;
+          house.constructionYear = model.constructionYear;
+          house.description = model.description;
+        }
+      }
+
+      return house;
     },
   },
   mutations: {

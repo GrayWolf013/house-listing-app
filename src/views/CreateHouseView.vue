@@ -144,55 +144,62 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   setup() {
     const store = useStore();
+    const route = useRoute();
     const router = useRouter();
 
     const state = reactive({
       buttonClicked: false,
-      house: {
-        streetName: "",
-        houseNumber: null,
-        numberAddition: null,
-        zip: "",
-        city: "",
-        price: null,
-        size: null,
-        hasGarage: false,
-        bedrooms: null,
-        bathrooms: null,
-        constructionYear: null,
-        description: "",
-      },
+      // emptyHouse: {
+      //   streetName: "",
+      //   houseNumber: null,
+      //   numberAddition: null,
+      //   zip: "",
+      //   city: "",
+      //   price: null,
+      //   size: null,
+      //   hasGarage: false,
+      //   bedrooms: null,
+      //   bathrooms: null,
+      //   constructionYear: null,
+      //   description: "",
+      // },
     });
 
-    function submitButtonClicked(){
+    const house = computed(() => {
+      return store.getters.getByIdEditModel(route.params.houseId);
+    });
+
+    function submitButtonClicked() {
       state.buttonClicked = true;
     }
 
     function createHouseListing() {
+      console.log(house.value)
       store
-        .dispatch("createHouse", state.house)
+        .dispatch("createHouse", house.value)
         .then(() => {
           // API success
           router.push({ name: "home" });
           console.log("data created");
         })
-        .catch(() => {
+        .catch((e) => {
           // API fail
-          console.log("error in request create");
+          console.log("error in request create", e);
         });
     }
 
     return {
       ...toRefs(state),
+      house,
       createHouseListing,
-      submitButtonClicked
+      submitButtonClicked,
     };
   },
 };

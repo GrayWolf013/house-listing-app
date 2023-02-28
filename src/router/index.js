@@ -27,6 +27,11 @@ const routes = [
     name: 'createHouse',
     component: CreateHouseView
   },
+  {
+    path: '/update/:houseId',
+    name: 'updateHouse',
+    component: CreateHouseView
+  },
 ]
 
 const router = createRouter({

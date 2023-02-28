@@ -6,12 +6,12 @@
         style="text-decoration: none; color: inherit"
         :to="{ name: 'createHouse' }"
       >
-      <button class="btn">
-        <div id="btn_container ">
-          <img src="@/assets/ic_plus_white@3x.png" width="15" height="15" />
-          <span>CREATE NEW</span>
-        </div>
-      </button>
+        <button class="btn">
+          <div id="btn_container ">
+            <img src="@/assets/ic_plus_white@3x.png" width="15" height="15" />
+            <span>CREATE NEW</span>
+          </div>
+        </button>
       </router-link>
     </div>
     <div class="home-body__BODY">
@@ -47,16 +47,20 @@
     </div>
     <br />
     <div v-if="housesprop.length > 0">
-      <router-link
-        style="text-decoration: none; color: inherit"
-        v-for="house of housesprop"
-        :key="house.id"
-        :to="{ name: 'houseDetails', params: { houseId: house.id } }"
-      >
-        <HouseCard :houseprop="house" />
-      </router-link>
+      <div v-for="house of housesprop" :key="house.id">
+        <router-link
+          style="text-decoration: none; color: inherit"
+          v-if="house.id"
+          :to="{ name: 'houseDetails', params: { houseId: house.id } }"
+        >
+          <HouseCard :houseprop="house" />
+        </router-link>
+      </div>
     </div>
-    <EmptySearchView v-else class="empty-container empty-state-message center" />
+    <EmptySearchView
+      v-else
+      class="empty-container empty-state-message center"
+    />
   </div>
 </template>
 

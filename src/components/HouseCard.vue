@@ -15,14 +15,31 @@
     <div class="container">
       <div class="card-header tab-button element">
         {{ houseprop.location.street }}
-        <img
-          v-if="houseprop.madeByMe"
-          src="@/assets/ic_delete@3x.png"
-          alt="delete-icon"
-          width="15"
-          height="15"
-          @click.prevent="deleteHouse(houseprop.id)"
-        />
+        <div class="card-header">
+          <router-link
+            v-if="houseprop.id"
+            style="text-decoration: none; color: inherit"
+            :to="{ name: 'updateHouse', params: { houseId: houseprop.id } }"
+          >
+            <img
+              v-if="houseprop.madeByMe"
+              src="@/assets/ic_edit@3x.png"
+              alt="delete-icon"
+              width="15"
+              height="15"
+            />
+          </router-link>
+          <div class="spacer" />
+
+          <img
+            v-if="houseprop.madeByMe"
+            src="@/assets/ic_delete@3x.png"
+            alt="delete-icon"
+            width="15"
+            height="15"
+            @click.prevent="deleteHouse(houseprop.id)"
+          />
+        </div>
       </div>
       <div class="body-text element">
         € {{ houseprop.price.toLocaleString("en-US") }}
@@ -115,6 +132,9 @@ export default {
     .element {
       margin-bottom: 5px;
     }
+  }
+  .spacer {
+    width: 10px;
   }
 }
 </style>
