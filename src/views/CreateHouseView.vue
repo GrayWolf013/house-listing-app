@@ -13,7 +13,10 @@
         </div>
       </router-link>
       <div>
-        <div class="header1">Create new listing</div>
+      
+        <div v-if="route.params.houseId" class="header1">Edit dlisting </div>
+        <div v-else class="header1">Create new listing</div>
+
         <form @submit.prevent="createHouseListing">
           <div class="input-field-title">Street name*</div>
           <input
@@ -156,20 +159,6 @@ export default {
 
     const state = reactive({
       buttonClicked: false,
-      // emptyHouse: {
-      //   streetName: "",
-      //   houseNumber: null,
-      //   numberAddition: null,
-      //   zip: "",
-      //   city: "",
-      //   price: null,
-      //   size: null,
-      //   hasGarage: false,
-      //   bedrooms: null,
-      //   bathrooms: null,
-      //   constructionYear: null,
-      //   description: "",
-      // },
     });
 
     const house = computed(() => {
@@ -200,6 +189,7 @@ export default {
       house,
       createHouseListing,
       submitButtonClicked,
+      route
     };
   },
 };
