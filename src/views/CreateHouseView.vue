@@ -105,11 +105,10 @@
             <div class="spacer" />
             <div>
               <div class="input-field-title">Garage*</div>
-              <input
-                type="text"
-                placeholder="Select"
-                v-model="house.hasGarage"
-              />
+              <select v-model="house.hasGarage">
+                <option value="false">no</option>
+                <option value="true">yes</option>
+              </select>
             </div>
           </div>
           <div class="flex">
@@ -230,14 +229,9 @@ export default {
         .dispatch("createHouse", house.value)
         .then((data) => {
           // API success
-          console.log("data.id");
-          console.log(data.id);
-          console.log("data.id");
-
           uploadHouseListingImage(data.id);
           console.log("data created");
         })
-        // .finally(() => router.push({ name: "home" }))
         .catch((e) => {
           // API fail
           console.log("error in request create", e);
@@ -256,7 +250,6 @@ export default {
       reader.readAsDataURL(image);
       reader.onload = (e) => {
         this.previewImage = e.target.result;
-        console.log(this.previewImage);
       };
     }
 
