@@ -29,7 +29,7 @@
 import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-import HouseListingForm from "@/components/HouseListingForm.vue";
+import HouseListingForm from "@/components/HouseListingFormComponent.vue";
 
 export default {
   setup() {

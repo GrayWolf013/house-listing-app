@@ -65,8 +65,8 @@
 
 <script>
 import { reactive, toRefs } from "vue";
-import HouseCard from "./HouseCard.vue";
-import EmptySearchView from "./EmptySearchView.vue";
+import HouseCard from "./HouseCardComponent.vue";
+import EmptySearchView from "./EmptySearchComponent.vue";
 export default {
   name: "HomeContent",
   props: {

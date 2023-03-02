@@ -7,7 +7,7 @@
 <script>
 import { reactive, toRefs, onMounted, computed } from "vue"
 import { useStore } from "vuex"
-import HouseContent from "@/components/HouseContent.vue"
+import HouseContent from "@/components/HouseContentComponent.vue"
 
 export default {
   name: "HomeView",

@@ -16,7 +16,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import HouseDetailsCard from "@/components/HouseDetailsCard.vue";
+import HouseDetailsCard from "@/components/HouseDetailsCardComponent.vue";
 
 export default {
   setup() {
