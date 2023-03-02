@@ -44,4 +44,9 @@ export default {
     margin-right: 10px;
   }
 }
+
+.center {
+  margin: 100px auto;
+  width: 60%;
+}
 </style>

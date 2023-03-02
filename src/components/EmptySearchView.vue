@@ -11,16 +11,10 @@
 <script>
 export default {
   name: "EmptySearchView",
-  data() {
-    return {};
-  },
-  computed: {},
-  mounted() {},
-  methods: {},
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .empty-container {
   margin: 100px auto;
   width: 60%;

@@ -140,7 +140,6 @@ export default createStore({
             value: data.value,
           })
         )
-
         .catch((error) => console.error(error));
     },
 
