@@ -59,7 +59,6 @@
     </div>
     <EmptySearchView
       v-else
-      class="empty-container empty-state-message center"
     />
   </div>
 </template>
