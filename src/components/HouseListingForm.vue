@@ -46,23 +46,11 @@
       required
     />
     <div class="input-field-title">Upload picture (PNG or JPG)*</div>
+    <UploadImageComponent
+      :houseImage="house.image"
+      @selectImage="selectImage"
+    />
 
-    <div>
-      <img
-        v-if="previewImage"
-        :src="previewImage"
-        alt="upload"
-        class="uploading-image"
-      />
-      <img
-        v-else-if="house.image"
-        :src="house.image"
-        alt="upload"
-        class="uploading-image"
-      />
-      <img v-else src="@/assets/ic_upload@3x.png" class="uploading-image" />
-      <input type="file" accept="image/jpeg" @change="uploadImage" />
-    </div>
     <div class="input-field-title">Price*</div>
     <input
       type="number"
@@ -140,6 +128,7 @@
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
+import UploadImageComponent from "./UploadImageComponent.vue";
 
 export default {
   name: "HouseListingForm",
@@ -151,27 +140,19 @@ export default {
   },
   setup(props, context) {
     const store = useStore();
-
     const state = reactive({
       buttonClicked: false,
-      previewImage: null,
     });
 
     const house = computed(() => {
       return store.getters.getByIdEditModel(props.houseId);
     });
 
-    function uploadImage(e) {
-      const image = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(image);
-      reader.onload = (e) => {
-        state.previewImage = e.target.result;
-        context.emit("selectImage", {
-          image: image,
-          previewImage: state.previewImage,
-        });
-      };
+    function selectImage(data) {
+      context.emit("selectImage", {
+        image: data.image,
+        previewImage: data.previewImage,
+      });
     }
 
     function submitButtonClicked() {
@@ -186,11 +167,12 @@ export default {
       ...toRefs(state),
       house,
 
-      uploadImage,
+      selectImage,
       submitButtonClicked,
       submitForm,
     };
   },
+  components: { UploadImageComponent },
 };
 </script>
 
@@ -206,11 +188,6 @@ export default {
 }
 .btn-container {
   margin: 50px 275px;
-}
-.uploading-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 5px;
 }
 .error {
   border: 1px solid red;
