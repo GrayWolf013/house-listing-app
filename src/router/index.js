@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import HouseDetailsView from '@/views/HouseDetailsView.vue'
-import CreateHouseView from '@/views/CreateHouseView.vue'
+import CreateEditHouseView from '@/views/CreateEditHouseView.vue'
 
 const routes = [
   {
@@ -25,12 +25,12 @@ const routes = [
   {
     path: '/create/',
     name: 'createHouse',
-    component: CreateHouseView
+    component: CreateEditHouseView
   },
   {
     path: '/update/:houseId',
     name: 'updateHouse',
-    component: CreateHouseView
+    component: CreateEditHouseView
   },
 ]
 
