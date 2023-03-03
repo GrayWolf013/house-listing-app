@@ -16,9 +16,33 @@ export default createStore({
     search: (state) => (searchText) => {
       // check if value is event caused by clear x in input
       if (searchText.target) return state.houses;
-      return state.houses.filter((house) =>
+
+      const filteredByStreet = state.houses.filter((house) =>
         house.location.street.toLowerCase().includes(searchText.toLowerCase())
       );
+      const filteredByPrice = state.houses.filter((house) =>
+        house.price.toString().toLowerCase().includes(searchText.toLowerCase())
+      );
+      const filteredByZip = state.houses.filter((house) =>
+        house.location.zip.toLowerCase().includes(searchText.toLowerCase())
+      );
+      const filteredBySize = state.houses.filter((house) =>
+        house.size.toString().toLowerCase().includes(searchText.toLowerCase())
+      );
+      const filteredByCity = state.houses.filter((house) =>
+        house.location.city.toLowerCase().includes(searchText.toLowerCase())
+      );
+      let result = [
+        ...new Set(
+          filteredByStreet.concat(
+            filteredByPrice,
+            filteredByZip,
+            filteredBySize,
+            filteredByCity
+          )
+        ),
+      ];
+      return result;
     },
     sortBy: (state) => (byPrice) => {
       if (state.houses) {
