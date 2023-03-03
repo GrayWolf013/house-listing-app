@@ -60,14 +60,14 @@ export default {
           .then(() => {
             // API success
             console.log("img uploaded");
-            router.push({ name: "home" });
+            router.push({ name: "houseDetails", params: { houseId: id } });
           })
           .catch((e) => {
             // API fail
             console.log("error in request upload", e);
           });
       } else {
-        router.push({ name: "home" });
+        router.push({ name: "houseDetails", params: { houseId: id } });
       }
     }
 
