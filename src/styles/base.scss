@@ -2,18 +2,18 @@
 @import url("https://fonts.cdnfonts.com/css/open-sans");
 
 $colors: (
-    PRIMARY: #eb5440,
-    SECONDARY: #4a4b4c,
-    TERTIARY: #e8e8e8,
-    TERTIARY2: #c3c3c3,
-    BACKGROUND1: #f6f6f6,
-    BACKGROUND2: #ffffff,
+  PRIMARY: #eb5440,
+  SECONDARY: #4a4b4c,
+  TERTIARY: #e8e8e8,
+  TERTIARY2: #c3c3c3,
+  BACKGROUND1: #f6f6f6,
+  BACKGROUND2: #ffffff,
 );
 
 $textColors: (
-    PRIMARY: #000000,
-    SECONDARY: #4a4b4c,
-    HYPERLINK: #067bc2,
+  PRIMARY: #000000,
+  SECONDARY: #4a4b4c,
+  HYPERLINK: #067bc2,
 );
 
 $montserrat: "Montserrat", sans-serif;
@@ -24,153 +24,163 @@ $medium: 500;
 $regular: 400;
 
 .montserrat-bold {
-    font-family: $montserrat;
-    font-weight: $bold;
+  font-family: $montserrat;
+  font-weight: $bold;
 }
 
 .montserrat-Semibold {
-    font-family: $montserrat;
-    font-weight: $semiBold;
+  font-family: $montserrat;
+  font-weight: $semiBold;
 }
 
 .montserrat-medium {
-    font-family: $montserrat;
-    font-weight: $medium;
+  font-family: $montserrat;
+  font-weight: $medium;
 }
 
 .montserrat-medium-italic {
-    @extend .montserrat-medium;
-    font-style: italic;
+  @extend .montserrat-medium;
+  font-style: italic;
 }
 
 .openSans-Semibold {
-    font-family: $openSans;
-    font-weight: $semiBold;
+  font-family: $openSans;
+  font-weight: $semiBold;
 }
 
 .openSans-Regular {
-    font-family: $openSans;
-    font-weight: $regular;
+  font-family: $openSans;
+  font-weight: $regular;
 }
 
 // Montserrat
 
 //  bold
 .header1 {
-    @extend .montserrat-bold;
-    font-size: 32px;
+  @extend .montserrat-bold;
+  font-size: 32px;
 }
 
 .header2 {
-    @extend .montserrat-bold;
-    font-size: 22px;
+  @extend .montserrat-bold;
+  font-size: 22px;
 }
 
 .header-menu {
-    @extend .montserrat-medium;
-    .active {
-        @extend .montserrat-bold;
-    }
-    font-size: 18px;
+  @extend .montserrat-medium;
+  .active {
+    @extend .montserrat-bold;
+  }
+  font-size: 18px;
 }
 
 .tab-button {
-    @extend .montserrat-bold;
-    font-size: 18px;
+  @extend .montserrat-bold;
+  font-size: 18px;
 }
 
 //  semibold
 
 .back-button-label {
-    @extend .montserrat-Semibold;
-    font-size: 16px;
+  @extend .montserrat-Semibold;
+  font-size: 16px;
 }
 
 .input-field-title {
-    @extend .montserrat-Semibold;
-    font-size: 14px;
+  @extend .montserrat-Semibold;
+  font-size: 14px;
 }
 
 //  medium
 
 .empty-state-message {
-    @extend .montserrat-medium;
-    font-size: 18px;
+  @extend .montserrat-medium;
+  font-size: 18px;
 }
 
 .error-message {
-    @extend .montserrat-medium-italic;
-    font-size: 14px;
+  @extend .montserrat-medium-italic;
+  font-size: 14px;
 }
 // Open Sans
 
 .listing-information {
-    @extend .openSans-Semibold;
-    font-size: 16px;
+  @extend .openSans-Semibold;
+  font-size: 16px;
 }
 
 .body-text {
-    @extend .openSans-Regular;
-    font-size: 18px;
+  @extend .openSans-Regular;
+  font-size: 18px;
 }
 
 .input-field {
-    @extend .openSans-Regular;
-    font-size: 14px;
+  @extend .openSans-Regular;
+  font-size: 14px;
 }
 
 .text-grey {
-    color: map-get($colors, TERTIARY2);
+  color: map-get($colors, TERTIARY2);
 }
 
+.text-darkgrey {
+  color: map-get($textColors, SECONDARY);
+}
 
-// global styles 
+// global styles
 
 body {
-    background-color: map-get($colors, BACKGROUND1);
-    color: map-get($textColors, PRIMARY);
+  background-color: map-get($colors, BACKGROUND1);
+  color: map-get($textColors, PRIMARY);
 }
-input[type=search] {
-    @extend .input-field;
-    color: map-get($textColors, SECONDARY);
-    width: 40%;
-    height: min-content;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(222, 222, 222);
-    background-image: url("/src/assets/ic_search@3x.png");
-    background-position: 10px; 
-    background-repeat: no-repeat;
-    background-size: 15px;
-    padding: 8px 10px 8px 40px;
-}
-
-input[type=search]::-webkit-search-cancel-button {
-    -webkit-appearance: searchfield-cancel-button;
+input[type="search"] {
+  @extend .input-field;
+  color: map-get($textColors, SECONDARY);
+  width: 40%;
+  height: min-content;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(222, 222, 222);
+  background-image: url("/src/assets/ic_search@3x.png");
+  background-position: 10px;
+  background-repeat: no-repeat;
+  background-size: 15px;
+  padding: 8px 10px 8px 40px;
 }
 
-input[type=text], input[type=number], textarea, select {
-    @extend .input-field;
-    color: map-get($textColors, SECONDARY);
-    width: 435px;
-    height: min-content;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 5px;
-    background-color: map-get($colors, BACKGROUND2);
-    padding: 8px 15px 8px 15px;
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  @extend .input-field;
+  color: map-get($textColors, SECONDARY);
+  width: 435px;
+  height: min-content;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  background-color: map-get($colors, BACKGROUND2);
+  padding: 8px 15px 8px 15px;
+}
+
+a {
+  color: map-get($textColors, HYPERLINK);
 }
 
 .btn {
-    width: 160px;
-    height: 40px;
-    padding: 0 10px;
-    text-align: center;
-    border: none;
-    border-radius: 6px;
-    justify-content: center;
-    font-size: 16px;
-    color: #fff;
-    background: map-get($colors, PRIMARY);
-  }
+  width: 160px;
+  height: 40px;
+  padding: 0 10px;
+  text-align: center;
+  border: none;
+  border-radius: 6px;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  background: map-get($colors, PRIMARY);
+}
