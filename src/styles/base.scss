@@ -130,6 +130,7 @@ $regular: 400;
 // global styles
 
 body {
+  margin: 0;
   background-color: map-get($colors, BACKGROUND1);
   color: map-get($textColors, PRIMARY);
 }

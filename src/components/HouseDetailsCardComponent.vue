@@ -112,13 +112,14 @@ export default {
 .card-details {
   color: map-get($colors, SECONDARY);
   padding-bottom: 50px;
+  background-color: white;
   .container {
     margin: 40px 40px 0 40px;
   }
   .house-details-image {
     width: 100%;
   }
-  background-color: white;
+
   .icon-container {
     display: flex;
   }

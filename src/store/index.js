@@ -63,38 +63,74 @@ export default createStore({
     },
 
     getByIdEditModel: (state, getters) => (id) => {
-      var house = {
-        streetName: "",
-        houseNumber: null,
-        numberAddition: null,
-        zip: "",
-        city: "",
-        price: null,
-        size: null,
-        hasGarage: false,
-        bedrooms: null,
-        bathrooms: null,
-        constructionYear: null,
-        description: "",
-      };
-      if (id) {
-        const model = getters.getById(id);
-        if (model) {
-          house.streetName = model.location.street;
-          house.image = model.image;
-          house.zip = model.location.zip;
-          house.city = model.location.city;
-          house.price = model.price;
-          house.size = model.size;
-          house.hasGarage = model.hasGarage;
-          house.bedrooms = model.rooms.bedrooms;
-          house.bathrooms = model.rooms.bathrooms;
-          house.constructionYear = model.constructionYear;
-          house.description = model.description;
-        }
+      const model = getters.getById(id);
+      if (!model) {
+        return null;
       }
 
+      const house = {
+        streetName: model.location.street || "",
+        houseNumber: model.location.houseNumber || null,
+        numberAddition: model.location.numberAddition || null,
+        zip: model.location.zip || "",
+        city: model.location.city || "",
+        bedrooms: model.rooms.bedrooms || null,
+        bathrooms: model.rooms.bathrooms || null,
+        price: model.price || null,
+        size: model.size || null,
+        hasGarage: model.hasGarage || false,
+        constructionYear: model.constructionYear || null,
+        description: model.description || "",
+      };
+
       return house;
+    },
+
+    getHouseRecommendations: (state, getters) => (id) => {
+      const model = getters.getById(id);
+      if (!model) {
+        return null;
+      }
+      const { location, size, price } = model;
+
+      // Filter out houses based on the location
+      const filteredHouses = state.houses.filter((house) => {
+        const { location: houseLocation } = house;
+        if (house.id.toString() !== id) {
+          // exclude house with matching id)
+          if (
+            houseLocation.city === location.city &&
+            houseLocation.zip === location.zip
+          ) {
+            return (
+              houseLocation.city === location.city &&
+              houseLocation.zip === location.zip
+            );
+          } else if (houseLocation.city === location.city) {
+            return houseLocation.city === location.city;
+          } else if (houseLocation.zip === location.zip) {
+            return (
+              houseLocation.zip === location.zip && house.id.toString() !== id
+            );
+          } else {
+            return true; // Don't filter if no city or zip specified
+          }
+        }
+      });
+
+      // Sort the filtered houses by their similarity to the model in terms of size and price
+      const sortedHouses = filteredHouses.sort((house1, house2) => {
+        const house1SizeDiff = Math.abs(house1.size - size);
+        const house2SizeDiff = Math.abs(house2.size - size);
+        const house1PriceDiff = Math.abs(house1.price - price);
+        const house2PriceDiff = Math.abs(house2.price - price);
+        const house1TotalDiff = house1SizeDiff + house1PriceDiff;
+        const house2TotalDiff = house2SizeDiff + house2PriceDiff;
+        return house1TotalDiff - house2TotalDiff;
+      });
+
+      // Return the top 3 houses from the sorted list
+      return sortedHouses.slice(0, 3);
     },
   },
   mutations: {

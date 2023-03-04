@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{ recommandation: isRecommandation }">
     <img
       class="image"
       v-if="houseprop.image"
@@ -79,6 +79,11 @@ export default {
       type: null,
       required: true,
     },
+    isRecommandation: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup() {
     const store = useStore();
@@ -103,14 +108,14 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .card {
   transition: 0.3s;
   width: 100%;
   border-radius: 5px;
   display: flex;
   background: map-get($colors, BACKGROUND2);
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -122,19 +127,35 @@ export default {
   .image {
     border-radius: 15px;
     padding: 10px;
-    width: 130px;
-    height: 130px;
+    width: 15%;
   }
 
   .container {
-    margin: 20px 0 0 20px;
-    width: 78%;
+    margin: 2%;
     .element {
       margin-bottom: 5px;
     }
   }
   .spacer {
     width: 10px;
+  }
+}
+
+.recommandation {
+  .image {
+    border-radius: 15px;
+    padding: 10px;
+    width: 26%;
+  }
+  .tab-button {
+    font-size: 16px;
+  }
+  .listing-information {
+    font-size: 14px;
+  }
+  .body-text {
+    @extend .openSans-Regular;
+    font-size: 14px;
   }
 }
 </style>
