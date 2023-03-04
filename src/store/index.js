@@ -109,9 +109,7 @@ export default createStore({
           } else if (houseLocation.city === location.city) {
             return houseLocation.city === location.city;
           } else if (houseLocation.zip === location.zip) {
-            return (
-              houseLocation.zip === location.zip && house.id.toString() !== id
-            );
+            return houseLocation.zip === location.zip;
           } else {
             return true; // Don't filter if no city or zip specified
           }

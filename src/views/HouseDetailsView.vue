@@ -16,14 +16,23 @@
     <div class="details-body">
       <HouseDetailsCard class="details-card" :house="house" />
       <div class="recomendations">
-      <div class="header2">Recommended for you</div>
-      <br>
-        <HouseCard
+        <div class="header2">Recommended for you</div>
+        <br />
+        <div
           v-for="recomendedHouse in recomendedHouses"
           :key="recomendedHouse.id"
-          :houseprop="recomendedHouse"
-          :isRecommandation="true"
-        />
+        >
+          <router-link
+            style="text-decoration: none; color: inherit"
+            v-if="house.id"
+            :to="{
+              name: 'houseDetails',
+              params: { houseId: recomendedHouse.id },
+            }"
+          >
+            <HouseCard :houseprop="recomendedHouse" :isRecommandation="true" />
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
