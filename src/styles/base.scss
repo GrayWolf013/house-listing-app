@@ -185,3 +185,10 @@ a {
   color: #fff;
   background: map-get($colors, PRIMARY);
 }
+
+.back-button {
+  display: flex;
+  img {
+    margin-right: 10px;
+  }
+}

@@ -64,25 +64,36 @@ export default createStore({
 
     getByIdEditModel: (state, getters) => (id) => {
       const model = getters.getById(id);
-      if (!model) {
-        return null;
-      }
-
-      const house = {
-        streetName: model.location.street || "",
-        houseNumber: model.location.houseNumber || null,
-        numberAddition: model.location.numberAddition || null,
-        zip: model.location.zip || "",
-        city: model.location.city || "",
-        bedrooms: model.rooms.bedrooms || null,
-        bathrooms: model.rooms.bathrooms || null,
-        price: model.price || null,
-        size: model.size || null,
-        hasGarage: model.hasGarage || false,
-        constructionYear: model.constructionYear || null,
-        description: model.description || "",
+      const defaultValues = {
+        streetName: "",
+        houseNumber: null,
+        numberAddition: null,
+        zip: "",
+        city: "",
+        bedrooms: null,
+        bathrooms: null,
+        price: null,
+        size: null,
+        hasGarage: false,
+        constructionYear: null,
+        description: "",
       };
-
+      const house = model
+        ? {
+            streetName: model.location.street,
+            houseNumber: model.location.houseNumber,
+            numberAddition: model.location.numberAddition,
+            zip: model.location.zip,
+            city: model.location.city,
+            bedrooms: model.rooms.bedrooms,
+            bathrooms: model.rooms.bathrooms,
+            price: model.price,
+            size: model.size,
+            hasGarage: model.hasGarage,
+            constructionYear: model.constructionYear,
+            description: model.description,
+          }
+        : defaultValues;
       return house;
     },
 
@@ -115,7 +126,7 @@ export default createStore({
           }
         }
       });
-
+      console.log(filteredHouses)
       // Sort the filtered houses by their similarity to the model in terms of size and price
       const sortedHouses = filteredHouses.sort((house1, house2) => {
         const house1SizeDiff = Math.abs(house1.size - size);
@@ -126,6 +137,7 @@ export default createStore({
         const house2TotalDiff = house2SizeDiff + house2PriceDiff;
         return house1TotalDiff - house2TotalDiff;
       });
+      console.log(sortedHouses)
 
       // Return the top 3 houses from the sorted list
       return sortedHouses.slice(0, 3);

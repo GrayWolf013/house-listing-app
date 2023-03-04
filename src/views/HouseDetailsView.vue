@@ -71,12 +71,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.back-button {
-  display: flex;
-  img {
-    margin-right: 10px;
-  }
-}
 .center {
   margin: 40px 200px;
 

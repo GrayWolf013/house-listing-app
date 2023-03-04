@@ -135,12 +135,10 @@ export default {
 
   .create-house-container {
     margin: 30px 0 0 15%;
-    .back-button {
-      margin-bottom: 20px;
-    }
   }
 
   .header1 {
+    margin-top: 20px;
     margin-bottom: 20px;
   }
 }
