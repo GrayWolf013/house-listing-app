@@ -66,6 +66,7 @@ export default createStore({
       const model = getters.getById(id);
       const defaultValues = {
         streetName: "",
+        image: null,
         houseNumber: null,
         numberAddition: null,
         zip: "",
@@ -81,6 +82,7 @@ export default createStore({
       const house = model
         ? {
             streetName: model.location.street,
+            image: model.image,
             houseNumber: model.location.houseNumber,
             numberAddition: model.location.numberAddition,
             zip: model.location.zip,
@@ -168,8 +170,14 @@ export default createStore({
      */
     editProperty: (state, data) => {
       state[data.array].forEach((element) => {
-        if (element.id.toString() == data.id)
+        if (element.id.toString() == data.id) {
           element[data.property] = data.value;
+          console.log('element[data.property]')
+          console.log(element[data.property])
+          console.log('element[data.property]')
+        } else {
+          console.log('element[data.property] error')
+        }
       });
     },
   },
