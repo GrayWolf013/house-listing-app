@@ -19,7 +19,7 @@
     <br />
     <div class="about-footer">
       <img src="@/assets/img_logo_dtt@3x.png" alt="Dtt logo" />
-      <div class="dtt-link"> 
+      <div class="dtt-link">
         <div class="input-field text-darkgrey">By DTT</div>
         <a href="www.d-tt.nl">www.d-tt.nl</a>
       </div>
@@ -40,8 +40,6 @@
     display: flex;
     .dtt-link {
       margin: auto 30px;
-
-      // margin:  2px 2px 2px auto;
     }
   }
 }

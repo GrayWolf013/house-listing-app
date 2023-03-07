@@ -37,7 +37,7 @@
             alt="delete-icon"
             width="15"
             height="15"
-            @click.prevent="deleteHouse(houseprop.id)"
+            @click.prevent="toggleAlert(true)"
           />
         </div>
       </div>
@@ -67,10 +67,12 @@
       </div>
     </div>
   </div>
+  <DeleteConfirmationAlert :houseId="houseprop.id" v-if="showAlert" @hideAlert="toggleAlert(false)" />
 </template>
 
 <script>
-import { useStore } from "vuex";
+import { reactive, toRefs } from "vue";
+import DeleteConfirmationAlert from "./Alerts/DeleteConfirmationAlert.vue";
 
 export default {
   name: "HouseCard",
@@ -85,25 +87,24 @@ export default {
       required: false,
     },
   },
-  setup() {
-    const store = useStore();
+  setup(props, context) {
+    const state = reactive({
+      showAlert: false,
+    });
 
-    function deleteHouse(id) {
-      store
-        .dispatch("deleteHouse", id)
-        .then(() => {
-          // API success
-          console.log("data deleted");
-        })
-        .catch(() => {
-          // API fail
-          console.log("error in request delete");
-        });
+    function toggleAlert(showAlert) {
+      state.showAlert = showAlert;
+      context.emit("toggleAlert", showAlert);
     }
 
     return {
-      deleteHouse,
+      ...toRefs(state),
+      toggleAlert,
     };
+  },
+  emits: ["toggleAlert"],
+  components: {
+    DeleteConfirmationAlert,
   },
 };
 </script>

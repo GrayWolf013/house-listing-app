@@ -1,5 +1,5 @@
 <template>
-  <div class="home-body">
+  <div class="home-body" :class="{ nonclickable: showAlert }">
     <div class="home-body__TOP">
       <div class="header1">Houses</div>
       <router-link
@@ -53,13 +53,11 @@
           v-if="house.id"
           :to="{ name: 'houseDetails', params: { houseId: house.id } }"
         >
-          <HouseCard :houseprop="house" />
+          <HouseCard :houseprop="house" @toggleAlert="toggleAlert" />
         </router-link>
       </div>
     </div>
-    <EmptySearchView
-      v-else
-    />
+    <EmptySearchView v-else />
   </div>
 </template>
 
@@ -67,6 +65,7 @@
 import { reactive, toRefs } from "vue";
 import HouseCard from "./HouseCardComponent.vue";
 import EmptySearchView from "./EmptySearchComponent.vue";
+
 export default {
   name: "HomeContent",
   props: {
@@ -79,7 +78,12 @@ export default {
     const state = reactive({
       searchText: "",
       sortByPrice: true,
+      showAlert: false,
     });
+
+    function toggleAlert(showAlert) {
+      state.showAlert = showAlert;
+    }
 
     function search(searchText) {
       context.emit("search", searchText);
@@ -92,6 +96,7 @@ export default {
 
     return {
       ...toRefs(state),
+      toggleAlert,
       search,
       sortBy,
     };
@@ -104,16 +109,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.nonclickable {
+  pointer-events: none;
+}
 .home-body {
   margin-left: 15%;
   margin-right: 15%;
   margin-top: 3%;
-
   .home-body__TOP {
     display: flex;
     justify-content: space-between;
   }
-
   .home-body__BODY {
     padding-top: 10px;
     display: flex;
