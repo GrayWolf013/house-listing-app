@@ -14,7 +14,9 @@
     <br />
     <br />
     <div class="details-body">
-      <HouseDetailsCard class="details-card" :house="house" />
+      <div class="details-card">
+        <HouseDetailsCard :house="house" @toggleAlert="toggleAlert" />
+      </div>
       <div class="recomendations">
         <div class="header2">Recommended for you</div>
         <br />
@@ -39,6 +41,7 @@
 </template>
 
 <script>
+import { reactive, toRefs } from "vue";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -50,6 +53,10 @@ export default {
     const route = useRoute();
     const store = useStore();
 
+    const state = reactive({
+      showAlert: false,
+    });
+
     const house = computed(() => {
       return store.getters.getById(route.params.houseId);
     });
@@ -58,9 +65,15 @@ export default {
       return store.getters.getHouseRecommendations(route.params.houseId);
     });
 
+    function toggleAlert(showAlert) {
+      state.showAlert = showAlert;
+    }
+
     return {
+      ...toRefs(state),
       house,
       recomendedHouses,
+      toggleAlert,
     };
   },
   components: {
@@ -80,12 +93,12 @@ export default {
   }
   .details-card {
     flex: 1;
-    flex-basis: 70%;
+    flex-basis: 60%;
   }
   .recomendations {
     flex: 1;
     margin-left: 40px;
-    flex-basis: 30%;
+    flex-basis: 40%;
   }
 }
 </style>

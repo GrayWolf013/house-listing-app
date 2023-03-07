@@ -8,7 +8,12 @@
       </div>
       <br />
       <div class="buttons">
-        <button  @click.prevent="deleteHouse" class="ok-button input-field-title">YES, DELETE</button>
+        <button
+          @click.prevent="deleteHouse"
+          class="ok-button input-field-title"
+        >
+          YES, DELETE
+        </button>
         <br />
         <button
           @click.prevent="hideAlert"
@@ -24,6 +29,7 @@
 <script>
 import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "DeleteConfirmationAlert",
@@ -34,7 +40,8 @@ export default {
     },
   },
   setup(props, context) {
-        const store = useStore();
+    const store = useStore();
+    const router = useRouter();
 
     const state = reactive({});
 
@@ -42,13 +49,12 @@ export default {
       context.emit("hideAlert");
     }
 
-
     function deleteHouse() {
       store
         .dispatch("deleteHouse", props.houseId)
         .then(() => {
           // API success
-          context.emit("hideAlert");
+          router.push({ name: "home" });
           console.log("data deleted");
         })
         .catch(() => {
@@ -60,11 +66,10 @@ export default {
     return {
       ...toRefs(state),
       hideAlert,
-      deleteHouse
+      deleteHouse,
     };
   },
-  emits: ['hideAlert'],
-
+  emits: ["hideAlert"],
 };
 </script>
 

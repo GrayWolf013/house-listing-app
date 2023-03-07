@@ -13,7 +13,33 @@
       alt="HouseImg"
     />
     <div class="container">
-      <div class="tab-button element">{{ house.location.street }}</div>
+      <div class="card-header">
+        <div class="tab-button element">{{ house.location.street }}</div>
+        <div class="card-header-manage">
+          <router-link
+            v-if="house.id"
+            style="text-decoration: none; color: inherit"
+            :to="{ name: 'updateHouse', params: { houseId: house.id } }"
+          >
+            <img
+              v-if="house.madeByMe"
+              src="@/assets/ic_edit@3x.png"
+              alt="delete-icon"
+              width="15"
+              height="15"
+            />
+          </router-link>
+
+          <img
+            v-if="house.madeByMe"
+            src="@/assets/ic_delete@3x.png"
+            alt="delete-icon"
+            width="15"
+            height="15"
+            @click.prevent="toggleAlert(true)"
+          />
+        </div>
+      </div>
       <br />
       <div class="icon-container listing-information">
         <img
@@ -77,10 +103,12 @@
       </div>
     </div>
   </div>
+  <DeleteConfirmationAlert :houseId="house.id" v-if="showAlert" @hideAlert="toggleAlert(false)" />
 </template>
 
 <script>
 import { reactive, toRefs } from "vue";
+import DeleteConfirmationAlert from "./Alerts/DeleteConfirmationAlert.vue";
 
 export default {
   name: "HouseDetailsCard",
@@ -90,9 +118,9 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props, context) {
     const state = reactive({
-      count: 0,
+      showAlert: false,
     });
 
     function hasGarageToHumain(hasGarage) {
@@ -100,10 +128,20 @@ export default {
       return "no";
     }
 
+    function toggleAlert(showAlert) {
+      state.showAlert = showAlert;
+      context.emit("toggleAlert", showAlert);
+    }
+
     return {
       ...toRefs(state),
       hasGarageToHumain,
+      toggleAlert
     };
+  },
+  emits: ["toggleAlert"],
+  components: {
+    DeleteConfirmationAlert,
   },
 };
 </script>
@@ -119,7 +157,17 @@ export default {
   .house-details-image {
     width: 100%;
   }
-
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    .card-header-manage {
+      display: flex;
+      justify-content: left;
+      * {
+        margin-left: 10px;
+      }
+    }
+  }
   .icon-container {
     display: flex;
   }
