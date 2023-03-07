@@ -54,6 +54,7 @@ export default {
         .dispatch("deleteHouse", props.houseId)
         .then(() => {
           // API success
+          context.emit("hideAlert");
           router.push({ name: "home" });
           console.log("data deleted");
         })
