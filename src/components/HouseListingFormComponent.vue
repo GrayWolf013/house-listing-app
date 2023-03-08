@@ -146,9 +146,10 @@ export default {
     });
 
     const house = computed(() => {
-      if (props.houseId)
-      return store.getters.getByIdEditModel(props.houseId);
-      return Object
+      if (props && props.houseId) {
+        return store.getters.getByIdEditModel(props.houseId);
+      }
+      return {};
     });
 
     function selectImage(data) {
@@ -163,6 +164,10 @@ export default {
     }
 
     function submitForm() {
+      console.log("house.value");
+      console.log(house.value);
+      console.log("house.value");
+
       context.emit("submitForm", house.value);
     }
 
