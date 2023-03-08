@@ -7,6 +7,56 @@ Array.prototype.sortBy = function (p) {
   });
 };
 
+function splitString(str) {
+  const arr = str.split(" ");
+  const last = arr.pop();
+  const remaining = arr.join(" ");
+  return { last, remaining };
+}
+const convertApiModelToEditHouseModel = (originalModel) => {
+  const { last, remaining } = splitString(originalModel.location.street);
+  const convertedModel = {
+    id: originalModel.id,
+    image: originalModel.image,
+    price: originalModel.price,
+    bedrooms: originalModel.rooms.bedrooms,
+    bathrooms: originalModel.rooms.bathrooms,
+    size: originalModel.size,
+    description: originalModel.description,
+    streetName: remaining,
+    houseNumber: last,
+    numberAddition: "",
+    city: originalModel.location.city,
+    zip: originalModel.location.zip,
+    constructionYear: originalModel.constructionYear,
+    hasGarage: originalModel.hasGarage,
+  };
+  return convertedModel;
+};
+
+const convertEditHouseModelToApiModel = (convertedModel) => {
+  const originalModel = {
+    id: convertedModel.id,
+    image: convertedModel.image,
+    price: convertedModel.price,
+    rooms: {
+      bedrooms: convertedModel.bedrooms,
+      bathrooms: convertedModel.bathrooms,
+    },
+    size: convertedModel.size,
+    description: convertedModel.description,
+    location: {
+      street: `${convertedModel.streetName} ${convertedModel.houseNumber}${convertedModel.numberAddition}`,
+      city: convertedModel.city,
+      zip: convertedModel.zip,
+    },
+    constructionYear: convertedModel.constructionYear,
+    hasGarage: convertedModel.hasGarage,
+    madeByMe: true,
+  };
+  return originalModel;
+};
+
 export default createStore({
   state: {
     houses: [],
@@ -63,39 +113,8 @@ export default createStore({
     },
 
     getByIdEditModel: (state, getters) => (id) => {
-      const model = getters.getById(id);
-      const defaultValues = {
-        streetName: "",
-        image: null,
-        houseNumber: null,
-        numberAddition: null,
-        zip: "",
-        city: "",
-        bedrooms: null,
-        bathrooms: null,
-        price: null,
-        size: null,
-        hasGarage: false,
-        constructionYear: null,
-        description: "",
-      };
-      const house = model
-        ? {
-            streetName: model.location.street,
-            image: model.image,
-            houseNumber: model.location.houseNumber,
-            numberAddition: model.location.numberAddition,
-            zip: model.location.zip,
-            city: model.location.city,
-            bedrooms: model.rooms.bedrooms,
-            bathrooms: model.rooms.bathrooms,
-            price: model.price,
-            size: model.size,
-            hasGarage: model.hasGarage,
-            constructionYear: model.constructionYear,
-            description: model.description,
-          }
-        : defaultValues;
+      const apiModel = getters.getById(id);
+      const house = convertApiModelToEditHouseModel(apiModel);
       return house;
     },
 
@@ -108,7 +127,7 @@ export default createStore({
 
       // Filter out houses based on the location
       const filteredHouses = state.houses.filter((house) => {
-        const { location: houseLocation } = house;
+        const houseLocation = house.location;
         if (house.id.toString() !== id) {
           // exclude house with matching id)
           if (
@@ -128,7 +147,6 @@ export default createStore({
           }
         }
       });
-      console.log(filteredHouses)
       // Sort the filtered houses by their similarity to the model in terms of size and price
       const sortedHouses = filteredHouses.sort((house1, house2) => {
         const house1SizeDiff = Math.abs(house1.size - size);
@@ -139,8 +157,6 @@ export default createStore({
         const house2TotalDiff = house2SizeDiff + house2PriceDiff;
         return house1TotalDiff - house2TotalDiff;
       });
-      console.log(sortedHouses)
-
       // Return the top 3 houses from the sorted list
       return sortedHouses.slice(0, 3);
     },
@@ -166,18 +182,29 @@ export default createStore({
     /**
      * Edit a specific property in an array in the store
      * @param {object} state The store's state
-     * @param {object} data An object containing the array, id, property and value
+     * @param {object} data An object containing the array, id and value
      */
     editProperty: (state, data) => {
-      state[data.array].forEach((element) => {
+      state[data.array].forEach((element, index) => {
         if (element.id.toString() == data.id) {
-          element[data.property] = data.value;
-          console.log('element[data.property]')
-          console.log(element[data.property])
-          console.log('element[data.property]')
-        } else {
-          console.log('element[data.property] error')
+          console.log("updatedElement");
+          console.log(data.value);
+          console.log("updatedElement");
+
+          state[data.array][index] = data.value;
         }
+      });
+    },
+
+    /**
+     * Edit a specific property in an array in the store
+     * @param {object} state The store's state
+     * @param {object} data An object containing the array, id, property and value
+     */
+    editPropertyInArray: (state, data) => {
+      state[data.array].forEach((element) => {
+        if (element.id.toString() == data.id)
+          element[data.property] = data.value;
       });
     },
   },
@@ -204,14 +231,22 @@ export default createStore({
       });
     },
 
-    editHouse(context, data) {
-      Api.edit("/houses", data).catch((error) => console.error(error));
+    editHouse({ commit }, data) {
+      Api.edit("/houses", data)
+        .then(() =>
+          commit("editProperty", {
+            array: "houses",
+            id: data.id,
+            value: convertEditHouseModelToApiModel(data.body),
+          })
+        )
+        .catch((error) => console.error(error));
     },
 
     uploadHouseImg({ commit }, data) {
       Api.upload("/houses", data)
         .then(() =>
-          commit("editProperty", {
+          commit("editPropertyInArray", {
             array: "houses",
             id: data.id,
             property: "image",

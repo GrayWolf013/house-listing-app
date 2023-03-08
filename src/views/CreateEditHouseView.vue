@@ -13,7 +13,7 @@
         </div>
       </router-link>
       <div>
-        <div v-if="route.params.houseId" class="header1">Edit dlisting</div>
+        <div v-if="route.params.houseId" class="header1">Edit listing</div>
         <div v-else class="header1">Create new listing</div>
         <house-listing-form
           @submitForm="submitForm"

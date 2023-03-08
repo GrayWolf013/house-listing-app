@@ -74,6 +74,7 @@
       <div>
         <div class="input-field-title">Garage*</div>
         <select v-model="house.hasGarage">
+          <option disabled value="">Please select an option</option>
           <option value="false">no</option>
           <option value="true">yes</option>
         </select>
@@ -145,7 +146,9 @@ export default {
     });
 
     const house = computed(() => {
+      if (props.houseId)
       return store.getters.getByIdEditModel(props.houseId);
+      return Object
     });
 
     function selectImage(data) {
