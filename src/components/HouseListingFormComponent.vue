@@ -11,7 +11,7 @@
       <div>
         <div class="input-field-title">House number*</div>
         <input
-          type="text"
+          type="number"
           placeholder="Enter the house number"
           v-model="house.houseNumber"
           :class="{ error: !house.houseNumber && buttonClicked }"
@@ -21,7 +21,7 @@
       <div>
         <div class="input-field-title">Addition (optional)</div>
         <input
-          type="text"
+          type="number"
           placeholder="e.g. A"
           v-model="house.numberAddition"
         />
@@ -49,7 +49,7 @@
 
     <div class="input-field-title">Price*</div>
     <input
-      type="text"
+      type="number"
       placeholder="e.g. €150.000"
       v-model="house.price"
       :class="{ error: !house.price && buttonClicked }"
@@ -58,7 +58,7 @@
       <div>
         <div class="input-field-title">Size*</div>
         <input
-          type="text"
+          type="number"
           placeholder="e.g. 60m²"
           v-model="house.size"
           :class="{ error: !house.size && buttonClicked }"
@@ -81,7 +81,7 @@
       <div>
         <div class="input-field-title">Bedrooms*</div>
         <input
-          type="text"
+          type="number"
           placeholder="Enter amount"
           v-model="house.bedrooms"
           :class="{ error: !house.bedrooms && buttonClicked }"
@@ -91,7 +91,7 @@
       <div>
         <div class="input-field-title">Bathrooms*</div>
         <input
-          type="text"
+          type="number"
           placeholder="Enter amount"
           v-model="house.bathrooms"
           :class="{ error: !house.bathrooms && buttonClicked }"
@@ -100,7 +100,7 @@
     </div>
     <div class="input-field-title">Construction date*</div>
     <input
-      type="text"
+      type="number"
       placeholder="e.g. 1900"
       v-model="house.constructionYear"
       :class="{ error: !house.constructionYear && buttonClicked }"
@@ -156,14 +156,24 @@ export default {
       });
     }
 
-    function isYearFormat(inputString) {
-      // Check if inputString is a string
-      if (typeof inputString !== "string") {
-        return false;
-      }
+    function isYearFormat(inputNumber) {
+      // Convert inputNumber to a string
+      var inputString = inputNumber.toString();
+
       // Check if inputString is a valid year format 'yyyy'
       var yearRegex = /^\d{4}$/;
-      return yearRegex.test(inputString);
+      if (!yearRegex.test(inputString)) {
+        return false;
+      }
+
+      // Check if input year is not before the current year
+      var inputYear = parseInt(inputString);
+      var currentYear = new Date().getFullYear();
+      if (!(inputYear < currentYear)) {
+        return false;
+      }
+
+      return true;
     }
 
     function formInvalid() {
@@ -185,21 +195,8 @@ export default {
         return true;
       }
 
-      // Check if any fields have invalid types
-      if (
-        isNaN(house.value.houseNumber) ||
-        isNaN(house.value.price) ||
-        isNaN(house.value.size) ||
-        isNaN(house.value.bedrooms) ||
-        isNaN(house.value.bathrooms) ||
-        isNaN(house.value.constructionYear)
-      ) {
-        state.errorMessage = "Please enter valid numbers for numeric fields.";
-        return true;
-      }
-
       if (!isYearFormat(house.value.constructionYear)) {
-        state.errorMessage = "Please enter valid construction year format.";
+        state.errorMessage = "Please enter valid construction year.";
         return true;
       }
 

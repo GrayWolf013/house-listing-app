@@ -1,7 +1,6 @@
 <template>
   <div class="center">
-    <router-link to="/" style="text-decoration: none; color: inherit">
-      <div class="back-button">
+      <div class="back-button" @click="backButtonClicked">
         <img
           src="@/assets/ic_back_grey@3x.png"
           alt="ic_back"
@@ -10,7 +9,6 @@
         />
         <div class="back-button-label">Back to overview</div>
       </div>
-    </router-link>
     <br />
     <br />
     <div class="details-body">
@@ -43,7 +41,7 @@
 <script>
 import { reactive, toRefs } from "vue";
 import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import HouseDetailsCard from "@/components/HouseDetailsCardComponent.vue";
 import HouseCard from "@/components/HouseCardComponent.vue";
@@ -51,6 +49,7 @@ import HouseCard from "@/components/HouseCardComponent.vue";
 export default {
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const store = useStore();
 
     const state = reactive({
@@ -69,11 +68,16 @@ export default {
       state.showAlert = showAlert;
     }
 
+    function backButtonClicked() {
+      router.go(-1)
+    }
+
     return {
       ...toRefs(state),
       house,
       recomendedHouses,
       toggleAlert,
+      backButtonClicked
     };
   },
   components: {
