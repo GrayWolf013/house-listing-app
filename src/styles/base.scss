@@ -155,7 +155,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 input[type="text"],
-input[type="number"],
 textarea,
 select {
   @extend .input-field;
@@ -163,7 +162,7 @@ select {
   width: 435px;
   height: min-content;
   box-sizing: border-box;
-  border: none;
+  border: transparent;
   border-radius: 5px;
   background-color: map-get($colors, BACKGROUND2);
   padding: 8px 15px 8px 15px;
