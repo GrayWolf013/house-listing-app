@@ -156,6 +156,16 @@ export default {
       });
     }
 
+    function isYearFormat(inputString) {
+      // Check if inputString is a string
+      if (typeof inputString !== "string") {
+        return false;
+      }
+      // Check if inputString is a valid year format 'yyyy'
+      var yearRegex = /^\d{4}$/;
+      return yearRegex.test(inputString);
+    }
+
     function formInvalid() {
       // Check if any required fields are empty
       if (
@@ -170,7 +180,6 @@ export default {
         !house.value.constructionYear ||
         !house.value.description ||
         !house.value.hasGarage
-
       ) {
         state.errorMessage = "Please fill out all required fields.";
         return true;
@@ -186,6 +195,11 @@ export default {
         isNaN(house.value.constructionYear)
       ) {
         state.errorMessage = "Please enter valid numbers for numeric fields.";
+        return true;
+      }
+
+      if (!isYearFormat(house.value.constructionYear)) {
+        state.errorMessage = "Please enter valid construction year format.";
         return true;
       }
 
@@ -242,6 +256,5 @@ export default {
 }
 .error-label {
   color: red;
-
 }
 </style>
