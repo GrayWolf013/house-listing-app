@@ -30,7 +30,6 @@
             />
           </router-link>
           <div class="spacer" />
-
           <img
             v-if="houseprop.madeByMe"
             src="@/assets/ic_delete@3x.png"
@@ -38,6 +37,23 @@
             width="15"
             height="15"
             @click.prevent="toggleAlert(true)"
+          />
+          <div class="spacer" />
+          <img
+            v-if="isFavorite"
+            src="@/assets/favorite-on.png"
+            alt="avorite-on-icon"
+            width="15"
+            height="15"
+            @click.prevent="toggleFavorite()"
+          />
+          <img
+            v-else
+            src="@/assets/favorite-off.png"
+            alt="favorite-off-icon"
+            width="15"
+            height="15"
+            @click.prevent="toggleFavorite()"
           />
         </div>
       </div>
@@ -67,11 +83,16 @@
       </div>
     </div>
   </div>
-  <DeleteConfirmationAlert :houseId="houseprop.id" v-if="showAlert" @hideAlert="toggleAlert(false)" />
+  <DeleteConfirmationAlert
+    :houseId="houseprop.id"
+    v-if="showAlert"
+    @hideAlert="toggleAlert(false)"
+  />
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, computed } from "vue";
+import { useStore } from "vuex";
 import DeleteConfirmationAlert from "./Alerts/DeleteConfirmationAlert.vue";
 
 export default {
@@ -88,8 +109,25 @@ export default {
     },
   },
   setup(props, context) {
+    const store = useStore();
+
     const state = reactive({
       showAlert: false,
+    });
+
+    const isFavorite = computed({
+      get: () => {
+        return store.getters["favoriteStore/isFavorite"](props.houseprop.id);
+      },
+      set: (value) => {
+        store.dispatch(
+          value
+            ? "favoriteStore/addToFavorites"
+            : "favoriteStore/removeFromFavorites",
+          props.houseprop.id
+        );
+        return value;
+      },
     });
 
     function toggleAlert(showAlert) {
@@ -97,9 +135,16 @@ export default {
       context.emit("toggleAlert", showAlert);
     }
 
+    function toggleFavorite() {
+      isFavorite.value = !isFavorite.value;
+    }
+
     return {
       ...toRefs(state),
       toggleAlert,
+      isFavorite,
+
+      toggleFavorite,
     };
   },
   emits: ["toggleAlert"],

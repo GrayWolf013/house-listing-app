@@ -1,6 +1,10 @@
 import { createStore } from "vuex";
 import Api from "@/api/client";
-import { convertApiModelToEditHouseModel, convertEditHouseModelToApiModel } from '@/store/modelConverter'
+import {
+  convertApiModelToEditHouseModel,
+  convertEditHouseModelToApiModel,
+} from "@/store/modelConverter";
+import { favoriteStore } from "./modules/favoriteStore";
 
 Array.prototype.sortBy = function (p) {
   return this.slice(0).sort(function (a, b) {
@@ -138,10 +142,6 @@ export default createStore({
     editProperty: (state, data) => {
       state[data.array].forEach((element, index) => {
         if (element.id.toString() == data.id) {
-          console.log("updatedElement");
-          console.log(data.value);
-          console.log("updatedElement");
-
           state[data.array][index] = data.value;
         }
       });
@@ -171,16 +171,16 @@ export default createStore({
 
     createHouse({ commit }, body) {
       return new Promise((resolve, reject) => {
-        console.log('body')
-        console.log(body)
-        console.log('body')
+        console.log("body");
+        console.log(body);
+        console.log("body");
 
         Api.post("/houses", body)
           .then((data) => {
-            console.log('data')
-            console.log(data)
-            console.log('data')
-    
+            console.log("data");
+            console.log(data);
+            console.log("data");
+
             commit("appendProperty", { property: "houses", value: data });
             resolve(data);
           })
@@ -225,5 +225,8 @@ export default createStore({
         )
         .catch((error) => console.error(error));
     },
+  },
+  modules: {
+    favoriteStore: favoriteStore,
   },
 });

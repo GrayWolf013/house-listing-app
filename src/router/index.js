@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import HouseDetailsView from '@/views/HouseDetailsView.vue'
 import CreateEditHouseView from '@/views/CreateEditHouseView.vue'
+import FavoriteListView from '@/views/FavoriteListView.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/update/:houseId',
     name: 'updateHouse',
     component: CreateEditHouseView
+  },
+  {
+    path: '/favorite',
+    name: 'favoriteHouse',
+    component: FavoriteListView
   },
 ]
 
