@@ -115,6 +115,9 @@ export default createStore({
       // Return the top 3 houses from the sorted list
       return sortedHouses.slice(0, 3);
     },
+    getHousesByIds: (state) => (ids) => {
+      return state.houses.filter(house => ids.includes(house.id))
+    }
   },
   mutations: {
     /**

@@ -1,6 +1,10 @@
 <template>
   <div class="home-body" :class="{ nonclickable: showAlert }">
-    <div class="home-body__TOP">
+    <div class="home-body__TOP" v-show="isFavorite">
+      <div class="header1">Favorite Houses</div>
+    </div>
+
+    <div class="home-body__TOP" v-show="!isFavorite">
       <div class="header1">Houses</div>
       <router-link
         style="text-decoration: none; color: inherit"
@@ -14,7 +18,7 @@
         </button>
       </router-link>
     </div>
-    <div class="home-body__BODY">
+    <div class="home-body__BODY" v-show="!isFavorite">
       <input
         v-model="searchText"
         type="search"
@@ -72,6 +76,10 @@ export default {
     housesprop: {
       type: Array,
       required: true,
+    },
+    isFavorite: {
+      type: Boolean,
+      required: false,
     },
   },
   setup(props, context) {
