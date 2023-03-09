@@ -100,15 +100,13 @@ export default {
     }
 
     function submitForm(houseModel) {
+      if (route.params.houseId) {
+        editHouseListing(houseModel);
+        console.log("update");
+        console.log(route.params.houseId);
 
-      if (route.params.houseId) { editHouseListing(houseModel);
-      console.log('update')
-      console.log(route.params.houseId)
-
-      console.log('update')
-
-    }
-      else createHouseListing(houseModel);
+        console.log("update");
+      } else createHouseListing(houseModel);
     }
 
     return {

@@ -1,37 +1,42 @@
 <template>
   <div class="home">
-    <HouseContent v-if="houses" :housesprop="houses" @search="search" @sortBy="sortBy"/>
+    <HouseContent
+      v-if="houses"
+      :housesprop="houses"
+      @search="search"
+      @sortBy="sortBy"
+    />
   </div>
 </template>
 
 <script>
-import { reactive, toRefs, onMounted, computed } from "vue"
-import { useStore } from "vuex"
-import HouseContent from "@/components/HouseContentComponent.vue"
+import { reactive, toRefs, onMounted, computed } from "vue";
+import { useStore } from "vuex";
+import HouseContent from "@/components/HouseContentComponent.vue";
 
 export default {
   name: "HomeView",
   setup() {
     const state = reactive({
       searchText: "",
-      sortByPrice: true
-    })
+      sortByPrice: true,
+    });
 
-    const store = useStore()
+    const store = useStore();
 
     function search(searchText) {
-      state.searchText = searchText
+      state.searchText = searchText;
     }
 
     function sortBy(price) {
-      state.sortByPrice = price
+      state.sortByPrice = price;
     }
 
     const houses = computed(() => {
       if (state.searchText) {
-        return store.getters.search(state.searchText) 
+        return store.getters.search(state.searchText);
       }
-      return store.getters.sortBy(state.sortByPrice) 
+      return store.getters.sortBy(state.sortByPrice);
     });
 
     onMounted(async () => {
@@ -51,7 +56,7 @@ export default {
       ...toRefs(state),
       houses,
       search,
-      sortBy
+      sortBy,
     };
   },
   components: {

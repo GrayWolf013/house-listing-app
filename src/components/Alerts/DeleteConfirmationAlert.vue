@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -42,8 +41,6 @@ export default {
   setup(props, context) {
     const store = useStore();
     const router = useRouter();
-
-    const state = reactive({});
 
     function hideAlert() {
       context.emit("hideAlert");
@@ -65,7 +62,6 @@ export default {
     }
 
     return {
-      ...toRefs(state),
       hideAlert,
       deleteHouse,
     };
