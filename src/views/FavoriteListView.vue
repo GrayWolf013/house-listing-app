@@ -3,8 +3,6 @@
     <HouseContent
       :isFavorite="true"
       :housesprop="houses"
-      @search="search"
-      @sortBy="sortBy"
     />
   </div>
 </template>

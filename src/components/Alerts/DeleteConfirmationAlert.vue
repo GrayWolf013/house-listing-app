@@ -34,7 +34,7 @@ export default {
   name: "DeleteConfirmationAlert",
   props: {
     houseId: {
-      type: null,
+      type: Number,
       required: true,
     },
   },

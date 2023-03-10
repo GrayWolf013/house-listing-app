@@ -114,7 +114,7 @@ export default {
   name: "HouseDetailsCard",
   props: {
     house: {
-      type: null,
+      type: Object,
       required: true,
     },
   },

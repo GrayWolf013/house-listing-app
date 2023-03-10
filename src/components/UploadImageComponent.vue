@@ -23,7 +23,7 @@ import { reactive, toRefs } from "vue";
 export default {
   props: {
     houseImage: {
-      type: null,
+      type: String,
       required: true,
     },
   },

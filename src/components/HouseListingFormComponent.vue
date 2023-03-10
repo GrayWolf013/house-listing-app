@@ -131,7 +131,7 @@ export default {
   name: "HouseListingForm",
   props: {
     houseId: {
-      type: null,
+      type: Number,
       required: true,
     },
   },
