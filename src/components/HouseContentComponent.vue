@@ -6,17 +6,12 @@
 
     <div class="home-body__TOP" v-show="!isFavorite">
       <div class="header1">Houses</div>
-      <router-link
-        style="text-decoration: none; color: inherit"
-        :to="{ name: 'createHouse' }"
-      >
-        <button class="btn">
-          <div id="btn_container ">
-            <img src="@/assets/ic_plus_white@3x.png" width="15" height="15" />
-            <span>CREATE NEW</span>
-          </div>
-        </button>
-      </router-link>
+      <button class="btn" @click="push('createHouse')">
+        <div id="btn_container ">
+          <img src="@/assets/ic_plus_white@3x.png" width="15" height="15" />
+          <span>CREATE NEW</span>
+        </div>
+      </button>
     </div>
     <div class="home-body__BODY" v-show="!isFavorite">
       <input
@@ -55,7 +50,7 @@
         <router-link
           style="text-decoration: none; color: inherit"
           v-if="house.id"
-          :to="{ name: 'houseDetails', params: { houseId: house.id } }"
+          :to="'/details/' + house.id"
         >
           <HouseCard :houseprop="house" @toggleAlert="toggleAlert" />
         </router-link>
@@ -67,6 +62,7 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import { useRouter } from "vue-router";
 import HouseCard from "./HouseCardComponent.vue";
 import EmptySearchView from "./EmptySearchComponent.vue";
 
@@ -83,6 +79,8 @@ export default {
     },
   },
   setup(props, context) {
+    const router = useRouter();
+
     const state = reactive({
       searchText: "",
       sortByPrice: true,
@@ -102,11 +100,16 @@ export default {
       context.emit("sortBy", price);
     }
 
+    function push(routeName) {
+      router.push({ name: routeName });
+    }
+
     return {
       ...toRefs(state),
       toggleAlert,
       search,
       sortBy,
+      push,
     };
   },
   components: {

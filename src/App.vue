@@ -1,9 +1,9 @@
 <template>
   <nav class="topnav tab-button header-menu">
     <img src="@/assets/img_logo_dtt@3x.png" alt="Dtt logo" />
-    <router-link to="/">Houses</router-link>
-    <router-link to="/favorite">Favorite</router-link>
-    <router-link to="/about">About</router-link>
+    <router-link to="/" active-class="active">Houses</router-link>
+    <router-link to="/favorite" active-class="active">Favorite</router-link>
+    <router-link to="/about" active-class="active">About</router-link>
   </nav>
   <router-view />
 </template>
