@@ -52,7 +52,7 @@ export default {
         .then(() => {
           // API success
           context.emit("hideAlert");
-          router.push({ name: "home" });
+          router.push({ name: "listHouse" });
           console.log("data deleted");
         })
         .catch(() => {

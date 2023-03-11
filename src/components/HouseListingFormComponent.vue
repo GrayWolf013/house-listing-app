@@ -159,49 +159,58 @@ export default {
     const state = reactive({
       house: {
         hasGarage: null,
+        numberAddition: null,
       },
       errorMessage: "",
       touchedFields: {}, // object to track if each field has been touched or not
     });
 
-    const isInvalid = computed(() => {
-      return (field) => {
-        let isInvalid = false;
-        // check if field is empty and has been touched by the user
-        if (field == "hasGarage")
-          isInvalid =
-            !(typeof state.house[field] === "boolean") &&
-            state.touchedFields[field];
-        if (field == "constructionYear")
-          isInvalid =
-            !isYearFormat(state.house.constructionYear) &&
-            state.touchedFields[field];
-        else isInvalid = !state.house[field] && state.touchedFields[field];
-        if (isInvalid)
-          state.errorMessage = "Please fill out all required fields.";
-        return isInvalid;
-      };
+    const isInvalid = computed(() => (field) => {
+      const { touchedFields } = state;
+      if (touchedFields[field]) return validateField(field, true);
+      else return false;
     });
 
+    function validateField(field, error) {
+      const { house } = state;
+      let isInvalid = false;
+
+      switch (field) {
+        case "numberAddition":
+          break;
+        case "image":
+          break;
+        case "hasGarage":
+          isInvalid = !(typeof house[field] === "boolean");
+          if (isInvalid && error)
+            state.errorMessage = "Please pick a garage option.";
+          break;
+
+        case "constructionYear":
+          isInvalid = !isYearFormat(house[field]);
+          if (isInvalid && error)
+            state.errorMessage = "Please pick a valid construction year.";
+          break;
+
+        default:
+          isInvalid = !house[field];
+          if (isInvalid && error)
+            state.errorMessage = "Please fill out all required fields.";
+          break;
+      }
+      return isInvalid;
+    }
+
     const submitButtonDisabled = computed(() => {
-      const requiredFields = [
-        "streetName",
-        "houseNumber",
-        "zip",
-        "city",
-        "price",
-        "size",
-        "bedrooms",
-        "bathrooms",
-        "constructionYear",
-        "description",
-        "hasGarage",
-      ];
-      const isMissingField = requiredFields.some((field) => {
-        const value = state.house[field];
-        return value === undefined || value === null || value === "";
+      let isInvalid = false;
+      const { house } = state;
+      Object.keys(house).map((key) => {
+        if (validateField(key)) {
+          isInvalid = true;
+          return;
+        }
       });
-      return isMissingField;
+      return isInvalid;
     });
 
     watch(submitButtonDisabled, (newValue) => {
