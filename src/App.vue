@@ -9,9 +9,6 @@
 </template>
 
 <style lang="scss">
-#app {
-}
-
 .topnav {
   overflow: hidden;
   background-color: map-get($colors, BACKGROUND2);

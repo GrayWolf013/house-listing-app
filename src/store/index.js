@@ -174,16 +174,8 @@ export default createStore({
 
     createHouse({ commit }, body) {
       return new Promise((resolve, reject) => {
-        console.log("body");
-        console.log(body);
-        console.log("body");
-
         Api.post("/houses", body)
           .then((data) => {
-            console.log("data");
-            console.log(data);
-            console.log("data");
-
             commit("appendProperty", { property: "houses", value: data });
             resolve(data);
           })
