@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const apiKey = "PBknlDMOSUux9sEyo0ivKtma64f13FVR";
 const headers = {
   "Content-Type": "application/json",
@@ -7,55 +9,45 @@ const baseUrl = "https://api.intern.d-tt.nl/api";
 
 export default {
   get(url) {
-    return fetch(baseUrl + url, { headers })
-      .then((response) => Promise.resolve(response.json()))
+    return axios.get(baseUrl + url, { headers })
+      .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error));
   },
 
-  post(url, body) {
-    const requestOptions = {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(body),
-    };
-    return fetch(baseUrl + url, requestOptions)
-      .then((response) => Promise.resolve(response.json()))
-      .catch((error) => Promise.reject(error));
-  },
+
+ async post(url, body) {
+  try {
+    const response = await axios.post(baseUrl + url, body, { headers })
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+},
 
   edit(url, data) {
-    const requestOptions = {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(data.body),
-    };
     const requestUrl = `${baseUrl}${url}/${data.id}`;
-    return fetch(requestUrl, requestOptions)
+    return axios.post(requestUrl, data.body, { headers })
       .then((response) => Promise.resolve(response))
       .catch((error) => Promise.reject(error));
   },
 
   delete(url, id) {
-    const requestOptions = {
-      method: "DELETE",
-      headers: headers,
-    };
     const requestUrl = `${baseUrl}${url}/${id}`;
-    return fetch(requestUrl, requestOptions)
+    return axios.delete(requestUrl, { headers })
       .then((response) => Promise.resolve(response))
       .catch((error) => Promise.reject(error));
   },
 
   upload(url, data) {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "X-Api-Key": apiKey,
-      },
-      body: data.body,
-    };
     const requestUrl = `${baseUrl}${url}/${data.id}/upload`;
-    return fetch(requestUrl, requestOptions)
+    const formData = new FormData();
+    formData.append("file", data.body);
+    return axios.post(requestUrl, formData, {
+      headers: {
+        ...headers,
+        "Content-Type": "multipart/form-data",
+      },
+    })
       .then((response) => Promise.resolve(response))
       .catch((error) => Promise.reject(error));
   },

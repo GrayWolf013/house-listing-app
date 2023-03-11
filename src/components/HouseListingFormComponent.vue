@@ -158,8 +158,19 @@ export default {
     const store = useStore();
     const state = reactive({
       house: {
-        hasGarage: null,
+        image: null,
+        price: null,
+        bedrooms: null,
+        bathrooms: null,
+        size: null,
+        description: null,
+        streetName: null,
+        houseNumber: null,
         numberAddition: null,
+        city: null,
+        zip: null,
+        constructionYear: null,
+        hasGarage: null,
       },
       errorMessage: "",
       touchedFields: {}, // object to track if each field has been touched or not
