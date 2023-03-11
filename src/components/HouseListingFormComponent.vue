@@ -5,7 +5,8 @@
       type="text"
       placeholder="Enter the street name"
       v-model="house.streetName"
-      :class="{ error: !house.streetName && buttonClicked }"
+      :class="{ error: isInvalid('streetName') }"
+      @input="setFieldTouched('streetName')"
     />
     <div class="flex">
       <div>
@@ -14,7 +15,8 @@
           type="number"
           placeholder="Enter the house number"
           v-model="house.houseNumber"
-          :class="{ error: !house.houseNumber && buttonClicked }"
+          :class="{ error: isInvalid('houseNumber') }"
+          @input="setFieldTouched('houseNumber')"
         />
       </div>
       <div class="spacer" />
@@ -32,14 +34,16 @@
       type="text"
       placeholder="e.g. 1000 AA"
       v-model="house.zip"
-      :class="{ error: !house.zip && buttonClicked }"
+      :class="{ error: isInvalid('zip') }"
+      @input="setFieldTouched('zip')"
     />
     <div class="input-field-title">City*</div>
     <input
       type="text"
       placeholder="e.g. Utrecht"
       v-model="house.city"
-      :class="{ error: !house.city && buttonClicked }"
+      :class="{ error: isInvalid('city') }"
+      @input="setFieldTouched('city')"
     />
     <div class="input-field-title">Upload picture (PNG or JPG)*</div>
     <UploadImageComponent
@@ -52,7 +56,8 @@
       type="number"
       placeholder="e.g. €150.000"
       v-model="house.price"
-      :class="{ error: !house.price && buttonClicked }"
+      :class="{ error: isInvalid('price') }"
+      @input="setFieldTouched('price')"
     />
     <div class="flex">
       <div>
@@ -61,7 +66,8 @@
           type="number"
           placeholder="e.g. 60m²"
           v-model="house.size"
-          :class="{ error: !house.size && buttonClicked }"
+          :class="{ error: isInvalid('size') }"
+          @input="setFieldTouched('size')"
         />
       </div>
       <div class="spacer" />
@@ -69,11 +75,14 @@
         <div class="input-field-title">Garage*</div>
         <select
           v-model="house.hasGarage"
-          :class="{ error: !house.hasGarage && buttonClicked }"
+          :class="{ error: isInvalid('hasGarage') }"
+          @click="setFieldTouched('hasGarage')"
         >
-          <option disabled value="">Please select an option</option>
-          <option value="false">no</option>
-          <option value="true">yes</option>
+          <option selected disabled :value="null">
+            Please select an option
+          </option>
+          <option :value="true">Yes</option>
+          <option :value="false">No</option>
         </select>
       </div>
     </div>
@@ -84,7 +93,8 @@
           type="number"
           placeholder="Enter amount"
           v-model="house.bedrooms"
-          :class="{ error: !house.bedrooms && buttonClicked }"
+          :class="{ error: isInvalid('bedrooms') }"
+          @input="setFieldTouched('bedrooms')"
         />
       </div>
       <div class="spacer" />
@@ -94,7 +104,8 @@
           type="number"
           placeholder="Enter amount"
           v-model="house.bathrooms"
-          :class="{ error: !house.bathrooms && buttonClicked }"
+          :class="{ error: isInvalid('bathrooms') }"
+          @input="setFieldTouched('bathrooms')"
         />
       </div>
     </div>
@@ -103,7 +114,8 @@
       type="number"
       placeholder="e.g. 1900"
       v-model="house.constructionYear"
-      :class="{ error: !house.constructionYear && buttonClicked }"
+      :class="{ error: isInvalid('constructionYear') }"
+      @input="setFieldTouched('constructionYear')"
     />
     <div class="input-field-title">Description*</div>
     <textarea
@@ -111,19 +123,26 @@
       rows="10"
       placeholder="Enter description"
       v-model="house.description"
-      :class="{ error: !house.description && buttonClicked }"
+      :class="{ error: isInvalid('description') }"
+      @input="setFieldTouched('description')"
     />
     <div class="error-label">
       {{ errorMessage }}
     </div>
     <div class="btn-container">
-      <button class="btn" @click="submitButtonClicked">POST</button>
+      <button
+        class="btn"
+        @click="submitButtonClicked"
+        :disabled="submitButtonDisabled"
+      >
+        POST
+      </button>
     </div>
   </form>
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs, computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
 import UploadImageComponent from "./UploadImageComponent.vue";
 
@@ -131,22 +150,64 @@ export default {
   name: "HouseListingForm",
   props: {
     houseId: {
-      type: Number,
-      required: true,
+      type: String,
+      required: false,
     },
   },
   setup(props, context) {
     const store = useStore();
     const state = reactive({
-      buttonClicked: false,
+      house: {
+        hasGarage: null,
+      },
       errorMessage: "",
+      touchedFields: {}, // object to track if each field has been touched or not
     });
 
-    const house = computed(() => {
-      if (props && props.houseId) {
-        return store.getters.getByIdEditModel(props.houseId);
+    const isInvalid = computed(() => {
+      return (field) => {
+        let isInvalid = false;
+        // check if field is empty and has been touched by the user
+        if (field == "hasGarage")
+          isInvalid =
+            !(typeof state.house[field] === "boolean") &&
+            state.touchedFields[field];
+        if (field == "constructionYear")
+          isInvalid =
+            !isYearFormat(state.house.constructionYear) &&
+            state.touchedFields[field];
+        else isInvalid = !state.house[field] && state.touchedFields[field];
+        if (isInvalid)
+          state.errorMessage = "Please fill out all required fields.";
+        return isInvalid;
+      };
+    });
+
+    const submitButtonDisabled = computed(() => {
+      const requiredFields = [
+        "streetName",
+        "houseNumber",
+        "zip",
+        "city",
+        "price",
+        "size",
+        "bedrooms",
+        "bathrooms",
+        "constructionYear",
+        "description",
+        "hasGarage",
+      ];
+      const isMissingField = requiredFields.some((field) => {
+        const value = state.house[field];
+        return value === undefined || value === null || value === "";
+      });
+      return isMissingField;
+    });
+
+    watch(submitButtonDisabled, (newValue) => {
+      if (!newValue) {
+        state.errorMessage = "";
       }
-      return {};
     });
 
     function selectImage(data) {
@@ -157,66 +218,50 @@ export default {
     }
 
     function isYearFormat(inputNumber) {
+      if (!inputNumber) return false;
       // Convert inputNumber to a string
       var inputString = inputNumber.toString();
-
       // Check if inputString is a valid year format 'yyyy'
       var yearRegex = /^\d{4}$/;
-      if (!yearRegex.test(inputString)) {
-        return false;
-      }
-
+      if (!yearRegex.test(inputString)) return false;
       // Check if input year is not before the current year
       var inputYear = parseInt(inputString);
       var currentYear = new Date().getFullYear();
-      if (!(inputYear < currentYear)) {
-        return false;
-      }
+      if (!(inputYear < currentYear)) return false;
 
       return true;
     }
 
-    function formInvalid() {
-      // Check if any required fields are empty
-      if (
-        !house.value.streetName ||
-        !house.value.houseNumber ||
-        !house.value.zip ||
-        !house.value.city ||
-        !house.value.price ||
-        !house.value.size ||
-        !house.value.bedrooms ||
-        !house.value.bathrooms ||
-        !house.value.constructionYear ||
-        !house.value.description ||
-        !house.value.hasGarage
-      ) {
-        state.errorMessage = "Please fill out all required fields.";
-        return true;
-      }
-
-      if (!isYearFormat(house.value.constructionYear)) {
-        state.errorMessage = "Please enter valid construction year.";
-        return true;
-      }
-
-      return false;
+    // method to set the touched status of a field to true
+    function setFieldTouched(field) {
+      state.touchedFields = {
+        ...state.touchedFields,
+        [field]: true,
+      };
     }
 
     function submitButtonClicked() {
-      state.buttonClicked = true;
-      if (!formInvalid()) context.emit("submitForm", house.value);
+      context.emit("submitForm", state.house);
     }
+
+    onMounted(async () => {
+      if (props && props.houseId) {
+        state.house = store.getters.getByIdEditModel(props.houseId);
+      }
+    });
 
     return {
       ...toRefs(state),
-      house,
+      submitButtonDisabled,
 
+      isInvalid,
+      setFieldTouched,
       selectImage,
       submitButtonClicked,
     };
   },
   components: { UploadImageComponent },
+  emits: ["selectImage", "submitForm"],
 };
 </script>
 

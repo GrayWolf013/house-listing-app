@@ -24,7 +24,7 @@ export default {
   props: {
     houseImage: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   setup(props, context) {

@@ -177,8 +177,8 @@ export default {
   }
 
   .container {
-    margin: 2%;
-    width: 80%;
+    margin: 10px;
+    width: 100%;
     .element {
       margin-bottom: 5px;
     }
