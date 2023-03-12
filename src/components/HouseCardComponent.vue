@@ -174,6 +174,9 @@ export default {
     border-radius: 15px;
     padding: 10px;
     width: 15%;
+    @media screen and (max-width: 767px) {
+      width: 25%;
+    }
   }
 
   .container {
