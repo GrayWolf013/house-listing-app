@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <div class="header1 mobile-only">About</div>
     <div class="header2">About DTT Real Estate</div>
     <br />
     <div class="input-field text-darkgrey">
@@ -41,6 +42,15 @@
     .dtt-link {
       margin: auto 30px;
     }
+  }
+}
+
+/* Styles for mobile devices */
+@media screen and (max-width: 767px) {
+  .header1 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
   }
 }
 </style>

@@ -1,26 +1,26 @@
 <template>
   <div class="root">
     <div class="create-house-container">
-      <router-link to="/" style="text-decoration: none; color: inherit">
-        <div class="back-button">
-          <img
-            src="@/assets/ic_back_grey@3x.png"
-            alt="ic_back"
-            width="20"
-            height="20"
-          />
-          <div class="back-button-label">Back to overview</div>
-        </div>
-      </router-link>
-      <div>
+      <div class="container-header">
+        <router-link to="/" style="text-decoration: none; color: inherit">
+          <div class="back-button">
+            <img
+              src="@/assets/ic_back_grey@3x.png"
+              alt="ic_back"
+              width="20"
+              height="20"
+            />
+            <div class="back-button-label desktop-only">Back to overview</div>
+          </div>
+        </router-link>
         <div v-if="route.params.houseId" class="header1">Edit listing</div>
         <div v-else class="header1">Create new listing</div>
-        <house-listing-form
-          @submitForm="submitForm"
-          @selectImage="selectImage"
-          :houseId="route.params.houseId"
-        />
       </div>
+      <house-listing-form
+        @submitForm="submitForm"
+        @selectImage="selectImage"
+        :houseId="route.params.houseId"
+      />
     </div>
   </div>
 </template>
@@ -133,13 +133,35 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 
-  .create-house-container {
-    margin: 30px 0 0 15%;
-  }
-
   .header1 {
     margin-top: 20px;
     margin-bottom: 20px;
+  }
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    .create-house-container {
+      margin: 30px 0 0 15%;
+    }
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    .create-house-container {
+      margin: 30px 15px 0 15px;
+      padding-bottom: 50px;
+    }
+    .container-header {
+      display: flex;
+      .header1 {
+        width: 100%;
+        text-align: center;
+      }
+      .back-button {
+        height: 100%;
+        img {
+          margin: auto;
+        }
+      }
+    }
   }
 }
 </style>

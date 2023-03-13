@@ -9,7 +9,7 @@
       @input="setFieldTouched('streetName')"
     />
     <div class="flex">
-      <div>
+      <div class="flex-item">
         <div class="input-field-title">House number*</div>
         <input
           type="number"
@@ -20,7 +20,7 @@
         />
       </div>
       <div class="spacer" />
-      <div>
+      <div class="flex-item">
         <div class="input-field-title">Addition (optional)</div>
         <input
           type="number"
@@ -60,7 +60,7 @@
       @input="setFieldTouched('price')"
     />
     <div class="flex">
-      <div>
+      <div class="flex-item">
         <div class="input-field-title">Size*</div>
         <input
           type="number"
@@ -71,7 +71,7 @@
         />
       </div>
       <div class="spacer" />
-      <div>
+      <div class="flex-item">
         <div class="input-field-title">Garage*</div>
         <select
           v-model="house.hasGarage"
@@ -87,7 +87,7 @@
       </div>
     </div>
     <div class="flex">
-      <div>
+      <div class="flex-item">
         <div class="input-field-title">Bedrooms*</div>
         <input
           type="number"
@@ -98,7 +98,7 @@
         />
       </div>
       <div class="spacer" />
-      <div>
+      <div class="flex-item">
         <div class="input-field-title">Bathrooms*</div>
         <input
           type="number"
@@ -318,5 +318,20 @@ export default {
 }
 .error-label {
   color: red;
+}
+
+@media screen and (max-width: 767px) {
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+  }
+  .flex {
+    .flex-item {
+      flex: 1;
+      flex-basis: 50%;
+    }
+  }
 }
 </style>
