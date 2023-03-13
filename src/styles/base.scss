@@ -58,12 +58,26 @@ $regular: 400;
 //  bold
 .header1 {
   @extend .montserrat-bold;
-  font-size: 32px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 32px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 18px;
+  }
 }
 
 .header2 {
   @extend .montserrat-bold;
-  font-size: 22px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 22px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
 }
 
 .header-menu {
@@ -76,7 +90,14 @@ $regular: 400;
 
 .tab-button {
   @extend .montserrat-bold;
-  font-size: 18px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
 }
 
 //  semibold
@@ -88,35 +109,77 @@ $regular: 400;
 
 .input-field-title {
   @extend .montserrat-Semibold;
-  font-size: 14px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
 }
 
 //  medium
 
 .empty-state-message {
   @extend .montserrat-medium;
-  font-size: 18px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
 }
 
 .error-message {
   @extend .montserrat-medium-italic;
-  font-size: 14px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
 }
 // Open Sans
 
 .listing-information {
   @extend .openSans-Semibold;
-  font-size: 16px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
 }
 
 .body-text {
   @extend .openSans-Regular;
-  font-size: 18px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
 }
 
 .input-field {
   @extend .openSans-Regular;
-  font-size: 14px;
+  /* Styles for desktop devices */
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+  }
+  /* Styles for mobile devices */
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
 }
 
 .text-grey {
@@ -208,9 +271,6 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
-
-
 
 /* Styles for desktop devices */
 @media screen and (min-width: 768px) {
